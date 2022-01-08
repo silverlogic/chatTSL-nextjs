@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+
+const withTM = require('next-transpile-modules')(['baseapp-nextjs-core']);
+
+module.exports = withTM({
   reactStrictMode: true,
-}
+})

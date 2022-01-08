@@ -8,22 +8,28 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "baseapp-nextjs-core": "git+https://alisson:CQ5M7thUNtvqSeKcNW62@bitbucket.org/silverlogic/baseapp-nextjs-core.git#4ed4f821e618f1e1eeaf3ed7d9d84f5e653e1f73",
     "@emotion/react": "^11.7.1",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.3.1",
     "@mui/material": "^5.3.1",
     "next": "12.0.7",
+    "next-transpile-modules": "^9.0.0",
     "notistack": "^2.0.3",
     "react": "17.0.2",
     "react-div-100vh": "^0.7.0",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@types/humps": "^2.0.1",
+    "@types/js-cookie": "^3.0.1",
     "@emotion/babel-plugin": "^11.7.2",
     "@emotion/eslint-plugin": "^11.7.0",
     "@types/node": "17.0.8",
+    "@types/qs": "^6.9.7",
     "@types/react": "17.0.38",
+    "@types/react-dom": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
     "eslint": "8.6.0",

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { FC } from 'react';
+import colors from '../styles/colors';
 
 interface IButtonProps {
   backgroundColor: string;
@@ -7,13 +8,13 @@ interface IButtonProps {
 
 const Button = styled.button<IButtonProps>`
   padding: 32px;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${colors.surface[900]};
   font-size: 24px;
   border-radius: 4px;
-  color: black;
+  color: ${colors.surface[500]};
   font-weight: bold;
   &:hover {
-    color: white;
+    color: ${colors.surface[50]};
   }
 `;
 

@@ -1,12 +1,16 @@
-import { createTheme, PaletteColorOptions, ThemeOptions } from '@mui/material/styles';
-import { 
+import {
+  createTheme,
+  PaletteColorOptions,
+  ThemeOptions,
+} from '@mui/material/styles';
+import {
   surface,
   primary,
   secondary,
   error,
   success,
   warning,
-  info
+  info,
 } from './colors';
 
 /*
@@ -19,55 +23,58 @@ import {
  */
 
 const palette = {
-    primary: {
-      main: primary[500],
-      light: primary[300],
-      dark: primary[700],
-      contrastText: surface[50],
-    },
-    secondary: {
-      main: secondary[500],
-      light: secondary[300],
-      dark: secondary[700], 
-      contrastText: surface[50],
-    },
-    success: {
-      main: success[500],
-      light: success[300],
-      dark: success[700],
-      contrastText: surface[50],
-    },
-    divider: surface[400],
-    info: {
-      main: info[500],
-      light: info[300],
-      dark: info[700],
-      contrastText: surface[50],
-    },
-    warning: {
-      main:  warning[500],
-      light: warning[300],
-      dark: warning[700],
-      contrastText: surface[50],
-    },
-    error: {
-      main: error[500],
-      light: error[300],
-      dark:  error[700],
-      contrastText: surface[50],
-    },
-    text: {
-      primary: surface[900],
-      secondary: surface[600],
-      disabled: surface[400],
-    },
-    background: {
-      default: surface[200],
-      paper: surface[50],
-    },
-  }
+  primary: {
+    main: primary[500],
+    light: primary[300],
+    dark: primary[700],
+    contrastText: surface[50],
+  },
+  secondary: {
+    main: secondary[500],
+    light: secondary[300],
+    dark: secondary[700],
+    contrastText: surface[50],
+  },
+  success: {
+    main: success[500],
+    light: success[300],
+    dark: success[700],
+    contrastText: surface[50],
+  },
+  divider: surface[400],
+  info: {
+    main: info[500],
+    light: info[300],
+    dark: info[700],
+    contrastText: surface[50],
+  },
+  warning: {
+    main: warning[500],
+    light: warning[300],
+    dark: warning[700],
+    contrastText: surface[50],
+  },
+  error: {
+    main: error[500],
+    light: error[300],
+    dark: error[700],
+    contrastText: surface[50],
+  },
+  text: {
+    primary: surface[900],
+    secondary: surface[600],
+    disabled: surface[400],
+  },
+  background: {
+    default: surface[200],
+    paper: surface[50],
+  },
+};
 
-export function fontSize(fontSizeInPx: number, defaultFontSize: number = 16): string {
+export function fontSize(
+  fontSizeInPx: number,
+  defaultFontSize: number = 16
+): string {
   /*
     - This should be used when you have a font-size value in px as reference 
       (i.e figma) to convert it to rem values instead;
@@ -76,7 +83,7 @@ export function fontSize(fontSizeInPx: number, defaultFontSize: number = 16): st
     - <body> should use this same default font-size value, 16px is usualy the default;
     - avoid changing the defaultFontSize value.
   */
-  return `${fontSizeInPx / defaultFontSize}rem`
+  return `${fontSizeInPx / defaultFontSize}rem`;
 }
 
 /* 
@@ -86,21 +93,21 @@ export function fontSize(fontSizeInPx: number, defaultFontSize: number = 16): st
     More info: https://mui.com/pt/customization/typography/
 */
 
-const typography =  {
-    h1: {
-      fontSize: fontSize(24),
-    },
-    h2: {
-      fontWeight: 500,
-    },
-    button: {
-      fontStyle: 'italic',
-    },
-  };
+const typography = {
+  h1: {
+    fontSize: fontSize(24),
+  },
+  h2: {
+    fontWeight: 500,
+  },
+  button: {
+    fontStyle: 'italic',
+  },
+};
 
 const theme: ThemeOptions = createTheme({
   palette,
-  typography
+  typography,
 });
 
 export default theme;

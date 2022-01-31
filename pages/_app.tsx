@@ -7,6 +7,18 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import theme from '../styles/theme';
 import createEmotionCache from '../styles/createEmotionCache';
 import { SnackbarProvider } from 'notistack';
+/* This will fix some issues with 100vh for mobile devices 
+https://github.com/mvasin/react-div-100vh 
+
+Use it like this:
+import { use100vh } from 'react-div-100vh'
+
+const MyComponent = ({ children }) => {
+  const height = use100vh()
+  return <div style={{ height: height }}>{children}</div>
+}
+*/
+import Div100vh from 'react-div-100vh'; 
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -26,9 +38,11 @@ const App = (props: MyAppProps) => {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <SnackbarProvider maxSnack={3}>
-          <Component {...pageProps} />
-        </SnackbarProvider>
+        <Div100vh>
+          <SnackbarProvider maxSnack={3}>
+            <Component {...pageProps} />
+          </SnackbarProvider>
+        </Div100vh>
       </ThemeProvider>
     </CacheProvider>
   );

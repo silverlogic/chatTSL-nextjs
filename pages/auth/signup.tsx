@@ -8,18 +8,15 @@ import { useSignUp, useLogin } from 'baseapp-nextjs-core'
 const SignUp: NextPage = () => {
   const router = useRouter()
 
-  const { mutation: loginMutation } = useLogin()
+  const { mutation: loginMutation } = useLogin({
+    onSuccess: () => {
+      router.push('/')
+    }
+  })
 
   const { formik } = useSignUp({
     onSuccess: (response: any, variables: any) => {
-      loginMutation.mutate({
-        email: variables?.email,
-        password: variables?.password,
-      } as unknown as void, {
-        onSuccess: () => {
-          router.push('/')
-        }
-      })
+      loginMutation.mutate(variables as unknown as void)
     }
   })
 

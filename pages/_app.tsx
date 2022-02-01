@@ -27,8 +27,9 @@ const App = (props: MyAppProps) => {
     <SnackbarProvider maxSnack={3}>
       <CacheProvider value={emotionCache}>
         <Head>
-          <title>My page</title>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
+          <title>BaseApp</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no" />
+          <link rel="icon" href="/favicon.ico" />
         </Head>
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}

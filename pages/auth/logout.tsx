@@ -13,7 +13,7 @@ const Logout: NextPage = () => {
       router.push('/')
     }
     doLogout()
-  }, [])
+  })
 
   return <div />
 }

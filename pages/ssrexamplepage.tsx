@@ -18,7 +18,7 @@ const SSRPage: FC = () => {
 
 export const getServerSideProps = (ctx: GetServerSidePropsContext) => {
   return {
-    props: {},
+    props: ctx.query,
   };
 };
 

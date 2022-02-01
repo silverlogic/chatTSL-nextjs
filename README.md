@@ -1,5 +1,25 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## NVM
+
+This step is optional but it is highly suggested you to use NVM.
+
+Instalation instructions can be found here: https://github.com/nvm-sh/nvm#installing-and-updating
+
+Once installed run:
+
+```bash
+nvm use
+```
+
+## Setup
+
+Install node dependencies:
+
+```bash
+yarn install
+```
+
 ## Getting Started
 
 First, run the development server:
@@ -32,3 +52,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## NextJS + MUI v5
+Settings according to [reference repo](https://github.com/leoroese/nextjs-materialui-v5-tutorial)

@@ -1,12 +1,12 @@
-import * as React from 'react';
 import Head from 'next/head';
 import { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import theme from '../styles/theme';
-import createEmotionCache from '../styles/createEmotionCache';
 import { SnackbarProvider } from 'notistack';
+
+import createEmotionCache from 'styles/createEmotionCache';
+import theme from 'styles/theme';
 /* This will fix some issues with 100vh for mobile devices 
 https://github.com/mvasin/react-div-100vh 
 

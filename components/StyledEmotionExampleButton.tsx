@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { FC } from 'react';
-import colors from '../styles/colors';
+
+import colors from 'styles/colors';
 
 interface IButtonProps {
   backgroundColor: string;

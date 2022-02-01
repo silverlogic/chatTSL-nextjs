@@ -3,6 +3,7 @@ import {
   PaletteColorOptions,
   ThemeOptions,
 } from '@mui/material/styles';
+
 import {
   surface,
   primary,
@@ -73,7 +74,7 @@ const palette = {
 
 export function fontSize(
   fontSizeInPx: number,
-  defaultFontSize: number = 16
+  defaultFontSize = 16
 ): string {
   /*
     - This should be used when you have a font-size value in px as reference 

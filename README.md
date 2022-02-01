@@ -1,5 +1,25 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## NVM
+
+This step is optional but it is highly suggested you to use NVM.
+
+Instalation instructions can be found here: https://github.com/nvm-sh/nvm#installing-and-updating
+
+Once installed run:
+
+```bash
+nvm use
+```
+
+## Setup
+
+Install node dependencies:
+
+```bash
+yarn install
+```
+
 ## Getting Started
 
 First, run the development server:

@@ -1,5 +1,6 @@
 import * as React from 'react';
 // eslint-disable-next-line @next/next/no-document-import-in-page
+import type { SimplePaletteColorOptions } from '@mui/material'
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 
@@ -12,7 +13,7 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           {/* PWA primary color */}
-          <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name="theme-color" content={(theme?.palette?.primary as SimplePaletteColorOptions).main} />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"

@@ -13,7 +13,7 @@
     "test": "yarn e2e:headless"
   },
   "dependencies": {
-    "baseapp-nextjs-core": "git+https://alisson:CQ5M7thUNtvqSeKcNW62@bitbucket.org/silverlogic/baseapp-nextjs-core.git#56ecf35c5e0cf8550f259c7841cd5c0181571f15",
+    "baseapp-nextjs-core": "git+https://alisson:CQ5M7thUNtvqSeKcNW62@bitbucket.org/silverlogic/baseapp-nextjs-core.git#f1d86629e86276f7337093fe2e8e55a3ad1cf174",
     "@emotion/react": "^11.7.1",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.6.0",

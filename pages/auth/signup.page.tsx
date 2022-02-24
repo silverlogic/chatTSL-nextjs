@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import * as Yup from 'yup'
 import { InputField, PasswordField, CheckboxField, ButtonWithLoading } from 'baseapp-nextjs-core'
 import { useSignUp, useLogin } from 'baseapp-nextjs-core'
 

@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import { AppProps } from 'next/app';
+import type { AppProps as MuiAppProps } from 'next/app';
+import type { NextComponentType, NextPageContext } from 'next'
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
@@ -9,20 +10,25 @@ import Header from '../components/Header'
 
 import createEmotionCache from 'styles/createEmotionCache';
 import theme from 'styles/theme';
-/* This will fix some issues with 100vh for mobile devices 
-https://github.com/mvasin/react-div-100vh 
-*/
-import Div100vh from 'react-div-100vh'; 
+import defaultLayout from 'components/Layout'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-interface MyAppProps extends AppProps {
+type NextComponentTypeWithLayout<P = Record<string, unknown>> = NextComponentType<NextPageContext, any, P> & {
+  getLayout?(page: React.ReactNode): React.ReactNode
+}
+
+interface AppProps extends MuiAppProps {
+  Component: NextComponentTypeWithLayout;
   emotionCache?: EmotionCache;
 }
 
-const App = (props: MyAppProps) => {
+const App = (props: AppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  // Use the layout defined at the page level, if available
+  const getLayout = Component.getLayout || defaultLayout
+
   return (<BaseAppProvider pageProps={pageProps}>
     <SnackbarProvider maxSnack={3}>
       <CacheProvider value={emotionCache}>
@@ -34,17 +40,8 @@ const App = (props: MyAppProps) => {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Div100vh>
-            <Header />
 
-            <main>
-              <Component {...pageProps} />
-            </main>
-
-            <footer>
-              <p>Made with &#10084; by <a href="https://tsl.io">The SilverLogic</a></p>
-            </footer>
-          </Div100vh>
+          {getLayout(<Component {...pageProps} />)}
         </ThemeProvider>
       </CacheProvider>
     </SnackbarProvider>

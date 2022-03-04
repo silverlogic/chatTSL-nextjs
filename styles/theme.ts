@@ -1,8 +1,4 @@
-import {
-  createTheme,
-  PaletteColorOptions,
-  ThemeOptions,
-} from '@mui/material/styles';
+import { createTheme, ThemeOptions } from '@mui/material/styles'
 
 import {
   surface,
@@ -12,7 +8,7 @@ import {
   success,
   warning,
   info,
-} from './colors';
+} from './colors'
 
 /*
   To customize the palette, you can set the main, light, dark, and contrastText.
@@ -70,12 +66,9 @@ const palette = {
     default: surface[200],
     paper: surface[50],
   },
-};
+}
 
-export function fontSize(
-  fontSizeInPx: number,
-  defaultFontSize = 16
-): string {
+export function fontSize(fontSizeInPx: number, defaultFontSize = 16): string {
   /*
     - This should be used when you have a font-size value in px as reference 
       (i.e figma) to convert it to rem values instead;
@@ -84,7 +77,7 @@ export function fontSize(
     - <body> should use this same default font-size value, 16px is usualy the default;
     - avoid changing the defaultFontSize value.
   */
-  return `${fontSizeInPx / defaultFontSize}rem`;
+  return `${fontSizeInPx / defaultFontSize}rem`
 }
 
 /* 
@@ -104,11 +97,11 @@ const typography = {
   button: {
     fontStyle: 'italic',
   },
-};
+}
 
 const theme: ThemeOptions = createTheme({
   palette,
   typography,
-});
+})
 
-export default theme;
+export default theme

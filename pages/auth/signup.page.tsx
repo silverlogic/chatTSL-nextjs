@@ -1,7 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { InputField, PasswordField, CheckboxField, ButtonWithLoading } from 'baseapp-nextjs-core'
+import {
+  InputField,
+  PasswordField,
+  CheckboxField,
+  ButtonWithLoading,
+} from 'baseapp-nextjs-core'
 import { useSignUp, useLogin } from 'baseapp-nextjs-core'
 
 const SignUp: NextPage = () => {
@@ -10,13 +15,13 @@ const SignUp: NextPage = () => {
   const { mutation: loginMutation } = useLogin({
     onSuccess: () => {
       router.push('/')
-    }
+    },
   })
 
   const { formik } = useSignUp({
     onSuccess: (response: any, variables: any) => {
       loginMutation.mutate(variables as unknown as void)
-    }
+    },
   })
 
   return (
@@ -58,11 +63,7 @@ const SignUp: NextPage = () => {
             formik={formik}
           />
 
-          <PasswordField
-            label="Password"
-            name="password"
-            formik={formik}
-          />
+          <PasswordField label="Password" name="password" formik={formik} />
 
           <CheckboxField
             label="I agree to the Terms & Conditions"
@@ -70,7 +71,9 @@ const SignUp: NextPage = () => {
             formik={formik}
           />
 
-          <ButtonWithLoading type="submit" formik={formik}>Sign Up</ButtonWithLoading>
+          <ButtonWithLoading type="submit" formik={formik}>
+            Sign Up
+          </ButtonWithLoading>
         </fieldset>
       </form>
     </div>

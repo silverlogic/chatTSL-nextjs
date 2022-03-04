@@ -17,7 +17,7 @@ require('dotenv').config()
 /**
  * @type {Cypress.PluginConfig}
  */
- module.exports = (on, config) => {
+module.exports = (on, config) => {
   config.env.api_address = process.env.NEXT_PUBLIC_API_BASE_URL
   return config
 }

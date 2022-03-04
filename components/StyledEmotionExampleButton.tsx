@@ -1,10 +1,10 @@
-import styled from '@emotion/styled';
-import { FC } from 'react';
+import styled from '@emotion/styled'
+import { FC } from 'react'
 
-import colors from 'styles/colors';
+import colors from 'styles/colors'
 
 interface IButtonProps {
-  backgroundColor: string;
+  backgroundColor: string
 }
 
 const Button = styled.button<IButtonProps>`
@@ -17,10 +17,10 @@ const Button = styled.button<IButtonProps>`
   &:hover {
     color: ${colors.surface[50]};
   }
-`;
+`
 
 const StyledEmotionButton: FC = () => {
-  return <Button backgroundColor="green">This my button component.</Button>;
-};
+  return <Button backgroundColor="green">This my button component.</Button>
+}
 
-export default StyledEmotionButton;
+export default StyledEmotionButton

@@ -1,7 +1,11 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { InputField, PasswordField, ButtonWithLoading } from 'baseapp-nextjs-core'
+import {
+  InputField,
+  PasswordField,
+  ButtonWithLoading,
+} from 'baseapp-nextjs-core'
 import { useLogin, useUser } from 'baseapp-nextjs-core'
 
 const Login: NextPage = () => {
@@ -10,7 +14,7 @@ const Login: NextPage = () => {
 
   useUser({
     redirectTo: '/',
-    redirectIfFound: true
+    redirectIfFound: true,
   })
 
   const router = useRouter()
@@ -18,7 +22,7 @@ const Login: NextPage = () => {
   const { formik } = useLogin({
     onSuccess: () => {
       router.push('/')
-    }
+    },
   })
 
   return (
@@ -39,13 +43,11 @@ const Login: NextPage = () => {
             formik={formik}
           />
 
-          <PasswordField
-            label="Password"
-            name="password"
-            formik={formik}
-          />
+          <PasswordField label="Password" name="password" formik={formik} />
 
-          <ButtonWithLoading type="submit" formik={formik}>Login</ButtonWithLoading>
+          <ButtonWithLoading type="submit" formik={formik}>
+            Login
+          </ButtonWithLoading>
         </fieldset>
       </form>
     </div>

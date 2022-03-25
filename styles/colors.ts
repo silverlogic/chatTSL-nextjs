@@ -29,7 +29,7 @@ export const surface = {
   A200: '#3F6A81',
   A400: '#373E46',
   A700: '#0C0C0C',
-};
+}
 
 /*
   Primary: Used to represent primary interface elements for a user. It's the 
@@ -51,7 +51,7 @@ export const primary = {
   A200: '#40c4ff',
   A400: '#00b0ff',
   A700: '#0091ea',
-};
+}
 
 /*
   Secondary: Used to represent secondary interface elements for a user. It 
@@ -74,7 +74,7 @@ export const secondary = {
   A200: '#e040fb',
   A400: '#d500f9',
   A700: '#aa00ff',
-};
+}
 
 /*
   Error: Used to represent interface elements that the user should be made 
@@ -96,7 +96,7 @@ export const error = {
   A200: '#e040fb',
   A400: '#d500f9',
   A700: '#aa00ff',
-};
+}
 
 /*
   Success: Used to indicate the successful completion of an action that user 
@@ -118,7 +118,7 @@ export const success = {
   A200: '#e040fb',
   A400: '#d500f9',
   A700: '#aa00ff',
-};
+}
 
 /*
   Warning: Used to represent potentially dangerous actions or important 
@@ -140,7 +140,7 @@ export const warning = {
   A200: '#e040fb',
   A400: '#d500f9',
   A700: '#aa00ff',
-};
+}
 
 /*
   Info: Used to present information to the user that is neutral and not 
@@ -162,8 +162,7 @@ export const info = {
   A200: '#e040fb',
   A400: '#d500f9',
   A700: '#aa00ff',
-};
-
+}
 
 export default {
   surface,
@@ -173,4 +172,4 @@ export default {
   success,
   warning,
   info,
-};
+}

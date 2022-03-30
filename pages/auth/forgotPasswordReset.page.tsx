@@ -1,15 +1,15 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { InputField, ButtonWithLoading } from 'baseapp-nextjs-core'
-import { useRecoverPassword } from 'baseapp-nextjs-core'
+import { InputField, ButtonWithLoading, PasswordField } from 'baseapp-nextjs-core'
+import { useResetPassword } from 'baseapp-nextjs-core'
 
-const ForgotPassword: NextPage = () => {
+const ForgotPasswordReset: NextPage = () => {
   const router = useRouter()
 
-  const { formik } = useRecoverPassword({
+  const { formik } = useResetPassword({
     onSuccess: () => {
-      router.push('/auth/forgotPasswordReset')
+      router.push('/')
     },
   })
 
@@ -23,13 +23,9 @@ const ForgotPassword: NextPage = () => {
         <fieldset>
           <legend>Forgot Password</legend>
 
-          <InputField
-            label="Email Address"
-            name="email"
-            type="email"
-            placeholder="Email"
-            formik={formik}
-          />
+          <PasswordField label="New password" name="newPassword" formik={formik} />
+
+          <InputField label="Token" name="token" placeholder="token" formik={formik} />
 
           <ButtonWithLoading type="submit" formik={formik}>
             Send
@@ -40,4 +36,4 @@ const ForgotPassword: NextPage = () => {
   )
 }
 
-export default ForgotPassword
+export default ForgotPasswordReset

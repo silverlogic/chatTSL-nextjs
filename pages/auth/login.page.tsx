@@ -1,12 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import {
-  InputField,
-  PasswordField,
-  ButtonWithLoading,
-} from 'baseapp-nextjs-core'
+import { InputField, PasswordField, ButtonWithLoading } from 'baseapp-nextjs-core'
 import { useLogin, useUser } from 'baseapp-nextjs-core'
+import Link from 'next/link'
+import { Box } from '@mui/material'
 
 const Login: NextPage = () => {
   // On this example we want the logged in user to go to / but in your
@@ -44,6 +42,11 @@ const Login: NextPage = () => {
           />
 
           <PasswordField label="Password" name="password" formik={formik} />
+          <Box sx={{ mb: '8px' }}>
+            <Link href="/auth/forgotPassword" passHref>
+              Forgot Password
+            </Link>
+          </Box>
 
           <ButtonWithLoading type="submit" formik={formik}>
             Login

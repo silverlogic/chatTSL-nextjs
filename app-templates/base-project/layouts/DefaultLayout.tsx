@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import Head from 'next/head'
 
-import Header from '../components/Header'
+import Header from 'components/Header'
 
 /* This will fix some issues with 100vh for mobile devices 
 https://github.com/mvasin/react-div-100vh 

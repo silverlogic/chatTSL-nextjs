@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import {
   InputField,
@@ -8,6 +7,7 @@ import {
   ButtonWithLoading,
 } from 'baseapp-nextjs-core'
 import { useSignUp, useLogin } from 'baseapp-nextjs-core'
+import Head from 'next/head'
 
 const SignUp: NextPage = () => {
   const router = useRouter()
@@ -27,9 +27,8 @@ const SignUp: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>Sign Up | BaseApp</title>
+        <title>BaseApp - Sign Up</title>
       </Head>
-
       <form onSubmit={formik.handleSubmit}>
         <fieldset>
           <legend>Sign Up</legend>

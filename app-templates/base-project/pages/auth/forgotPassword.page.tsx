@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { InputField, ButtonWithLoading } from 'baseapp-nextjs-core'
 import { useRecoverPassword } from 'baseapp-nextjs-core'
+import Head from 'next/head'
 
 const ForgotPassword: NextPage = () => {
   const router = useRouter()
@@ -18,7 +18,6 @@ const ForgotPassword: NextPage = () => {
       <Head>
         <title>Forgot Password Reset| BaseApp</title>
       </Head>
-
       <form onSubmit={formik.handleSubmit}>
         <fieldset>
           <legend>Forgot Password</legend>

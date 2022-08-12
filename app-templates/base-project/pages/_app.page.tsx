@@ -6,7 +6,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import { SnackbarProvider } from 'notistack'
-import { BaseAppProvider } from 'baseapp-nextjs-core'
+import { BaseAppProvider } from '@baseapp-frontend/core'
 
 import createEmotionCache from 'styles/createEmotionCache'
 import DefaultLayout from 'layouts/DefaultLayout'

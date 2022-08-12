@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import {
-  InputField,
+  TextField,
   PasswordField,
   CheckboxField,
   ButtonWithLoading,
-} from 'baseapp-nextjs-core'
-import { useSignUp, useLogin } from 'baseapp-nextjs-core'
+} from '@baseapp-frontend/design-system-mui'
+import { useSignUp, useLogin } from '@baseapp-frontend/core'
 import Head from 'next/head'
 
 const SignUp: NextPage = () => {
@@ -33,21 +33,21 @@ const SignUp: NextPage = () => {
         <fieldset>
           <legend>Sign Up</legend>
 
-          <InputField
+          <TextField
             label="First Name"
             name="firstName"
             placeholder="First Name"
             formik={formik}
           />
 
-          <InputField
+          <TextField
             label="Last Name"
             name="lastName"
             placeholder="Last Name"
             formik={formik}
           />
 
-          <InputField
+          <TextField
             label="Email Address"
             name="email"
             type="email"
@@ -55,7 +55,7 @@ const SignUp: NextPage = () => {
             formik={formik}
           />
 
-          <InputField
+          <TextField
             label="Phone"
             name="phoneNumber"
             placeholder="Phone Number"

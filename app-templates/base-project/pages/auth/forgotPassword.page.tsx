@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { InputField, ButtonWithLoading } from 'baseapp-nextjs-core'
-import { useRecoverPassword } from 'baseapp-nextjs-core'
+import { ButtonWithLoading, TextField } from '@baseapp-frontend/design-system-mui'
+import { useRecoverPassword } from '@baseapp-frontend/core'
 import Head from 'next/head'
 
 const ForgotPassword: NextPage = () => {
@@ -22,7 +22,7 @@ const ForgotPassword: NextPage = () => {
         <fieldset>
           <legend>Forgot Password</legend>
 
-          <InputField
+          <TextField
             label="Email Address"
             name="email"
             type="email"

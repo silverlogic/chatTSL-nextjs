@@ -67,6 +67,7 @@ const SignUp: NextPage = () => {
           <CheckboxField
             label="I agree to the Terms & Conditions"
             name="acceptConsent"
+            CheckboxProps={{ name: 'acceptConsent' }}
             formik={formik}
           />
 

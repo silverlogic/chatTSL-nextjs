@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { useUser } from 'baseapp-nextjs-core'
+import { useUser } from '@baseapp-frontend/core'
 import {
   AppBar,
   Toolbar,

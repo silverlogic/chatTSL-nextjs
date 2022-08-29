@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const withTM = require('next-transpile-modules')(['baseapp-nextjs-core'])
+const withTM = require('next-transpile-modules')(['@baseapp-frontend/core','@baseapp-frontend/design-system-mui'])
 
 module.exports = withTM({
   reactStrictMode: true,

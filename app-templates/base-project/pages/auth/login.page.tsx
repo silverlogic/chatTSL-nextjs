@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { InputField, PasswordField, ButtonWithLoading } from 'baseapp-nextjs-core'
-import { useLogin, useUser } from 'baseapp-nextjs-core'
+import { ButtonWithLoading, TextField, PasswordField } from '@baseapp-frontend/design-system-mui'
+import { useLogin, useUser } from '@baseapp-frontend/core'
 import Link from 'next/link'
 import { Box } from '@mui/material'
 
@@ -33,7 +33,7 @@ const Login: NextPage = () => {
         <fieldset>
           <legend>Login</legend>
 
-          <InputField
+          <TextField
             label="Email Address"
             name="email"
             type="email"

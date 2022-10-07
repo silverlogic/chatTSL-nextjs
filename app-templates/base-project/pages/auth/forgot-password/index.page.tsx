@@ -7,9 +7,9 @@ import Head from 'next/head'
 const ForgotPassword: NextPage = () => {
   const router = useRouter()
 
-  const { formik } = useRecoverPassword({
+  const { form } = useRecoverPassword({
     onSuccess: () => {
-      router.push('/auth/forgotPasswordReset')
+      router.push('/auth/forgot-password-reset')
     },
   })
 
@@ -18,7 +18,7 @@ const ForgotPassword: NextPage = () => {
       <Head>
         <title>Forgot Password Reset| BaseApp</title>
       </Head>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={form.handleSubmit}>
         <fieldset>
           <legend>Forgot Password</legend>
 
@@ -27,10 +27,10 @@ const ForgotPassword: NextPage = () => {
             name="email"
             type="email"
             placeholder="Email"
-            formik={formik}
+            form={form}
           />
 
-          <ButtonWithLoading type="submit" formik={formik}>
+          <ButtonWithLoading type="submit" form={form}>
             Send
           </ButtonWithLoading>
         </fieldset>

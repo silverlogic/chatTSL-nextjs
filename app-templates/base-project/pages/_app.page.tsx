@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import Head from 'next/head'
 import type { AppProps as MuiAppProps } from 'next/app'
 import type { NextComponentType, NextPageContext } from 'next'
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
@@ -32,7 +33,7 @@ const App = (props: AppProps) => {
 
   return (
     <BaseAppProvider pageProps={pageProps}>
-      <SnackbarProvider maxSnack={3}>
+      <SnackbarProvider maxSnack={3} autoHideDuration={5000}>
         <CacheProvider value={emotionCache}>
           <Head>
             <title>BaseApp</title>
@@ -49,6 +50,7 @@ const App = (props: AppProps) => {
           </ThemeProvider>
         </CacheProvider>
       </SnackbarProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </BaseAppProvider>
   )
 }

@@ -18,7 +18,7 @@ const SignUp: NextPage = () => {
     },
   })
 
-  const { formik } = useSignUp({
+  const { form } = useSignUp({
     onSuccess: (response: any, variables: any) => {
       loginMutation.mutate(variables as unknown as void)
     },
@@ -29,7 +29,7 @@ const SignUp: NextPage = () => {
       <Head>
         <title>BaseApp - Sign Up</title>
       </Head>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={form.handleSubmit}>
         <fieldset>
           <legend>Sign Up</legend>
 
@@ -37,14 +37,14 @@ const SignUp: NextPage = () => {
             label="First Name"
             name="firstName"
             placeholder="First Name"
-            formik={formik}
+            form={form}
           />
 
           <TextField
             label="Last Name"
             name="lastName"
             placeholder="Last Name"
-            formik={formik}
+            form={form}
           />
 
           <TextField
@@ -52,26 +52,26 @@ const SignUp: NextPage = () => {
             name="email"
             type="email"
             placeholder="Email"
-            formik={formik}
+            form={form}
           />
 
           <TextField
             label="Phone"
             name="phoneNumber"
             placeholder="Phone Number"
-            formik={formik}
+            form={form}
           />
 
-          <PasswordField label="Password" name="password" formik={formik} />
+          <PasswordField label="Password" name="password" form={form} />
 
           <CheckboxField
             label="I agree to the Terms & Conditions"
             name="acceptConsent"
             CheckboxProps={{ name: 'acceptConsent' }}
-            formik={formik}
+            form={form}
           />
 
-          <ButtonWithLoading type="submit" formik={formik}>
+          <ButtonWithLoading type="submit" form={form}>
             Sign Up
           </ButtonWithLoading>
         </fieldset>

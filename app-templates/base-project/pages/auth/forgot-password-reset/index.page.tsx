@@ -7,7 +7,7 @@ import Head from 'next/head'
 const ForgotPasswordReset: NextPage = () => {
   const router = useRouter()
 
-  const { formik } = useResetPassword({
+  const { form } = useResetPassword({
     onSuccess: () => {
       router.push('/')
     },
@@ -18,15 +18,15 @@ const ForgotPasswordReset: NextPage = () => {
       <Head>
         <title>BaseApp - Forgot Password Reset</title>
       </Head>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={form.handleSubmit}>
         <fieldset>
           <legend>Forgot Password</legend>
 
-          <PasswordField label="New password" name="newPassword" formik={formik} />
+          <PasswordField label="New password" name="newPassword" form={form} />
 
-          <TextField label="Token" name="token" placeholder="token" formik={formik} />
+          <TextField label="Token" name="token" placeholder="token" form={form} />
 
-          <ButtonWithLoading type="submit" formik={formik}>
+          <ButtonWithLoading type="submit" form={form}>
             Send
           </ButtonWithLoading>
         </fieldset>

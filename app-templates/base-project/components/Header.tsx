@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useUser } from '@baseapp-frontend/core'
 import {
   AppBar,
+  Box,
   Toolbar,
   Button,
   Typography,
@@ -34,12 +35,12 @@ function Header() {
         </Typography>
 
         <Link href="/" passHref>
-          <Button color="inherit">Home</Button>
+          <Button color="inherit" sx={{marginRight: 1}}>Home</Button>
         </Link>
         {!user && (
           <>
             <Link href="/auth/login" passHref>
-              <Button color="inherit">Login</Button>
+              <Button color="inherit" sx={{marginRight: 1}}>Login</Button>
             </Link>
             <Link href="/auth/signup" passHref>
               <Button color="inherit">Sign Up</Button>
@@ -49,7 +50,7 @@ function Header() {
 
         {user && (
           <>
-            <span>Welcome {user.email}</span>
+            <Box component="span" sx={{marginRight: 1}}>Welcome {user.email} </Box>
             <Link href="/auth/logout" passHref>
               <Button color="inherit">Logout</Button>
             </Link>

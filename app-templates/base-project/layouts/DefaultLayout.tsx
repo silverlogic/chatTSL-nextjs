@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import Head from 'next/head'
+import { Container } from '@mui/material'
 
 import Header from 'components/Header'
 
@@ -23,7 +24,7 @@ function DefaultLayout(page: ReactNode): ReactNode {
       <Div100vh>
         <Header />
 
-        <main>{page}</main>
+        <Container maxWidth="xl">{page}</Container>
 
         <footer>
           <p>

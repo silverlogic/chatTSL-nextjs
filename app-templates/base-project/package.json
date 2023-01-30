@@ -32,6 +32,7 @@
   "devDependencies": {
     "@emotion/babel-plugin": "^11.10.0",
     "@emotion/eslint-plugin": "^11.10.0",
+    "@faker-js/faker": "^7.6.0",
     "@types/humps": "^2.0.2",
     "@types/js-cookie": "^3.0.2",
     "@types/node": "^18.7.2",

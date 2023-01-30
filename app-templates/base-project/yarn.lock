@@ -76,8 +76,10 @@
   resolved "https://registry.yarnpkg.com/@baseapp-frontend/config/-/config-1.0.1.tgz#0ba8136de5f3aa29052a197ab0dbdaa83e00bf46"
   integrity sha512-NUhZV8npt0lVFmn5AmnNpvjFsj+gOaLuNRBT9t6kRrQVtXVKBDDo6lz+ZrcuGotmqgkQ5dcnkrRQaEFKukWrJg==
 
-"@baseapp-frontend/core@*", "@baseapp-frontend/core@file:../../../baseapp-frontend/packages/core":
-  version "2.0.0"
+"@baseapp-frontend/core@*", "@baseapp-frontend/core@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@baseapp-frontend/core/-/core-2.2.1.tgz#0b25dbb03109f44c8209146c209ab0d17833ef37"
+  integrity sha512-U0GnCeIjDlS4j6XArc/iApbMSf25J/Z0KFWR+MwIHQxNEbdUOdl7/60CV+cMEmgBkRXT5UpXlOKW9pEaWnNBfg==
   dependencies:
     "@baseapp-frontend/config" "*"
     "@baseapp-frontend/tsconfig" "*"
@@ -90,8 +92,10 @@
     react-query "^3.34.8"
     yup "^0.32.11"
 
-"@baseapp-frontend/design-system-mui@file:../../../baseapp-frontend/packages/design-system-mui":
-  version "1.3.0"
+"@baseapp-frontend/design-system-mui@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@baseapp-frontend/design-system-mui/-/design-system-mui-1.3.1.tgz#f087520bd4223b7e11d6d38cc292dc34388f9f3b"
+  integrity sha512-GCIdNbpx+Hgsz4KAPDA8xbeoiMA3EZb51WyosPYxL+IRGkZBWxynqoG8EVQTxnvhmDjTC7tRyLsiXeKMOS641Q==
   dependencies:
     "@baseapp-frontend/core" "*"
     "@emotion/react" "^11.10.0"
@@ -273,6 +277,11 @@
     js-yaml "^4.1.0"
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
+
+"@faker-js/faker@^7.6.0":
+  version "7.6.0"
+  resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-7.6.0.tgz#9ea331766084288634a9247fcd8b84f16ff4ba07"
+  integrity sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==
 
 "@hapi/hoek@^9.0.0":
   version "9.3.0"

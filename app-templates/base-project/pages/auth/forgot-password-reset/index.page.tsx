@@ -22,9 +22,9 @@ const ForgotPasswordReset: NextPage = () => {
         <fieldset>
           <legend>Forgot Password</legend>
 
-          <PasswordField label="New password" name="newPassword" form={form} />
+          <PasswordField label="New password" name="newPassword" form={form} fullWidth sx={{mb: 2}} />
 
-          <TextField label="Token" name="token" placeholder="token" form={form} />
+          <TextField label="Token" name="token" placeholder="token" form={form}  fullWidth sx={{mb: 2}}/>
 
           <ButtonWithLoading type="submit" form={form}>
             Send

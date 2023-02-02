@@ -27,7 +27,9 @@ const ForgotPassword: NextPage = () => {
             name="email"
             type="email"
             placeholder="Email"
+            fullWidth
             form={form}
+            sx={{ mb: '8px' }}
           />
 
           <ButtonWithLoading type="submit" form={form}>

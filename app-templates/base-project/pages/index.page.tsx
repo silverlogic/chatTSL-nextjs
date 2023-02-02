@@ -3,7 +3,7 @@ import Head from 'next/head'
 
 const Home: NextPage = () => {
   return (
-    <div>
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh'}}>
       <Head>
         <title>BaseApp - Home</title>
       </Head>

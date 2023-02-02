@@ -7,13 +7,13 @@ describe('SignUp', () => {
       this.user = user
     })
 
-    cy.intercept('POST', `${Cypress.env('api_address')}/register`,  {
+    cy.intercept('POST', `/v1/register`,  {
       fixture: 'user',
     })
-    cy.intercept('POST', `${Cypress.env('api_address')}/login`, {
+    cy.intercept('POST', `/v1/login`, {
       fixture: 'login',
     })
-    cy.intercept('GET', `${Cypress.env('api_address')}/users/me`, {
+    cy.intercept('GET', `/v1/users/me`, {
       fixture: 'user',
     })
   })

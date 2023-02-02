@@ -7,10 +7,14 @@ describe('Login', () => {
       this.user = user
     })
 
-    cy.intercept('POST', `${Cypress.env('api_address')}/login`, {
+    cy.intercept('GET', `/v1/auth/mfa/config`, {
+      body: {},
+    })
+
+    cy.intercept('POST', `/v1/login`, {
       fixture: 'login',
     })
-    cy.intercept('GET', `${Cypress.env('api_address')}/users/me`, {
+    cy.intercept('GET', `/v1/users/me`, {
       fixture: 'user',
     })
   })
@@ -19,6 +23,27 @@ describe('Login', () => {
     cy.visit('/auth/login')
     cy.get('input[name="email"]').type(this.user.email)
     cy.get('input[name="password"]').type(faker.internet.password())
+    cy.get('button[type="submit"]').click()
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq('/')
+    })
+  })
+
+  it('succeeds with two factor auth', function () {
+    cy.intercept('POST', `/v1/login`, {
+      body: {method: 'app'},
+    })
+    cy.intercept('POST', `/v1/login/code`, {
+      body: {method: 'app'},
+    })
+    cy.visit('/auth/login')
+    cy.get('input[name="email"]').type(this.user.email)
+    cy.get('input[name="password"]').type(faker.internet.password())
+    cy.get('button[type="submit"]').click()
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq('/auth/login')
+    })
+    cy.get('input[name="code"]').type(faker.internet.password())
     cy.get('button[type="submit"]').click()
     cy.location().should((loc) => {
       expect(loc.pathname).to.eq('/')

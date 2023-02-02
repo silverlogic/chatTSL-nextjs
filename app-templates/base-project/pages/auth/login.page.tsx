@@ -131,7 +131,7 @@ const Login: NextPage = () => {
 
         <PasswordField label="Password" name="password" form={form} fullWidth margin="normal"/>
         <Box sx={{ mb: '8px' }}>
-          <Link href="/auth/forgotPassword" passHref>
+          <Link href="/auth/forgot-password" passHref>
             Forgot Password
           </Link>
         </Box>

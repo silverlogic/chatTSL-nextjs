@@ -41,3 +41,22 @@ After forking baseapp:
 ## NextJS + MUI v5
 
 Settings according to [reference repo](https://github.com/leoroese/nextjs-materialui-v5-tutorial)
+
+## Building docker images for K8s
+Our current K8s stack expects 2 images built from the FE Dockerfile. We use a multi-stage Dockerfile, so you need to specify the right **target** for each of them:
+* Webapp image (`webapp_image`)
+```
+docker build --platform linux/amd64 --tag registry.tsl.io/<project>/<project>-webapp:<version> --target runner .
+```
+* Webapp build image (`webapp_build_image`)
+```
+docker build --platform linux/amd64 --tag registry.tsl.io/<project>/<project>-webapp-build:<version> --target builder .
+```
+`<version>` can be anything you want. For example, if you wanted to deploy a baseapp feature that is still in progress just to test it out and its JIRA ID was BA-123, you could use that ID to identify your images. In this example you would run:
+```
+docker build --platform linux/amd64 --tag registry.tsl.io/baseapp/baseapp-webapp:BA-123 --target runner .
+```
+and
+```
+docker build --platform linux/amd64 --tag registry.tsl.io/baseapp/baseapp-webapp-build:BA-123 --target builder .
+```

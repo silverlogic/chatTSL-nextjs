@@ -6,14 +6,15 @@ import { typography } from './typography'
 import { shadows } from './shadows'
 import { PaletteOptions } from '@mui/material'
 
-declare module '@mui/material/styles' {
+declare module '@mui/material/styles/createPalette' {
   interface Palette {
-    surface: typeof palette.surface,
+    surface: typeof palette.surface
   }
   interface PaletteOptions {
     surface: typeof palette.surface
   }
 }
+
 
 const theme = createTheme({
   palette,

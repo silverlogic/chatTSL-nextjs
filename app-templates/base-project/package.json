@@ -11,7 +11,9 @@
     "cypress:headless": "cypress run",
     "e2e": "start-server-and-test dev http://localhost:3000 cypress",
     "e2e:headless": "start-server-and-test dev http://localhost:3000 cypress:headless",
-    "test": "yarn e2e:headless"
+    "test": "yarn e2e:headless",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@baseapp-frontend/core": "^2.6.0",
@@ -33,6 +35,13 @@
     "@emotion/babel-plugin": "^11.10.0",
     "@emotion/eslint-plugin": "^11.10.0",
     "@faker-js/faker": "^7.6.0",
+    "@storybook/addon-essentials": "^7.0.12",
+    "@storybook/addon-interactions": "^7.0.12",
+    "@storybook/addon-links": "^7.0.12",
+    "@storybook/blocks": "^7.0.12",
+    "@storybook/nextjs": "^7.0.12",
+    "@storybook/react": "^7.0.12",
+    "@storybook/testing-library": "^0.0.14-next.2",
     "@types/humps": "^2.0.2",
     "@types/js-cookie": "^3.0.2",
     "@types/node": "^18.7.2",
@@ -46,10 +55,12 @@
     "eslint": "^8.21.0",
     "eslint-config-next": "12.2.5",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-storybook": "^0.6.12",
     "husky": "^8.0.1",
     "prettier": "^2.8.4",
     "pretty-quick": "^3.1.3",
     "start-server-and-test": "^1.14.0",
+    "storybook": "^7.0.12",
     "typescript": "^4.9.5"
   }
 }

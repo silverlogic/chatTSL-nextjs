@@ -60,3 +60,39 @@ and
 ```
 docker build --platform linux/amd64 --tag registry.tsl.io/baseapp/baseapp-webapp-build:BA-123 --target builder .
 ```
+
+## Storybook
+
+Use this command to run Storybook:
+
+```bash
+yarn storybook
+```
+
+After that the Storybook tab should open and run on the port 6006.
+
+The stories file should be created following this path:
+```bash
+...components/MyComponentFolder/stories.@(js|jsx|ts|tsx)
+```
+
+This is how it look a Basic Storybook stories file:
+```bash
+import type { Meta, StoryObj } from '@storybook/react'
+import { MY_COMPONENT } from 'MY_COMPONENT_PATH'
+
+const meta: Meta<typeof MY_COMPONENT> = {
+  title: 'TITLE_OF_THE_FOLDER_SHOWN_ON_STORYBOOK',
+  component: MY_COMPONENT,
+}
+
+export default meta
+type Story = StoryObj<typeof MY_COMPONENT>
+
+export const NAME_OF_COMPONENT_TO_BE_SHOWN_ON_STORYBOOK: Story = {
+  args: {
+    DEFAULT_PROPS_FOR_COMPONENT for example:
+    label: 'My Default Label'
+  },
+}
+```

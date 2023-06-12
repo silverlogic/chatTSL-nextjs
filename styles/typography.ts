@@ -103,7 +103,8 @@ export const typography = {
     fontSize: fontSize(16),
     fontFamily: 'Source Serif Pro, sans-serif',
     letterSpacing: fontSize(0),
-    lineHeight: '129%',
+    lineHeight: '145%',
+    fontColor: '#d1d5db',
   },
   body2: {
     fontSize: fontSize(14),

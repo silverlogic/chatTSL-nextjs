@@ -1,12 +1,18 @@
 import type { NextPage } from 'next'
-import ChatInterface from '../components/ChatInterface'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const Home: NextPage = () => {
-  return (
-    <>
-      <ChatInterface />
-    </>
-  )
+  const router = useRouter()
+
+  useEffect(() => {
+    function redirect() {
+      router.push('/auth/login')
+    }
+    redirect()
+  })
+
+  return <div></div>
 }
 
 export default Home

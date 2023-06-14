@@ -1,15 +1,21 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import {
-  TextField,
-  PasswordField,
-  CheckboxField,
-  ButtonWithLoading,
-} from '@baseapp-frontend/design-system-mui'
-import { useSignUp, useLogin } from '@baseapp-frontend/core'
-import Head from 'next/head'
+
+import { useSignUp, useLogin, useUser } from '@baseapp-frontend/core'
+
+import { signUpValidationSchema } from 'utils/formsUtils'
+import SignUpForm from './components/signup/Form'
+
+const defaultInitialValues = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  acceptConsent: false,
+}
 
 const SignUp: NextPage = () => {
+  useUser({ redirectTo: '/', redirectIfFound: true })
   const router = useRouter()
 
   const { mutation: loginMutation } = useLogin({
@@ -19,65 +25,14 @@ const SignUp: NextPage = () => {
   })
 
   const { form } = useSignUp({
+    validationSchema: signUpValidationSchema,
+    defaultValues: defaultInitialValues,
     onSuccess: (response: any, variables: any) => {
       loginMutation.mutate(variables as unknown as void)
     },
   })
 
-  return (
-    <div>
-      <Head>
-        <title>BaseApp - Sign Up</title>
-      </Head>
-      <form onSubmit={form.handleSubmit}>
-        <fieldset>
-          <legend>Sign Up</legend>
-
-          <TextField
-            label="First Name"
-            name="firstName"
-            placeholder="First Name"
-            form={form}
-          />
-
-          <TextField
-            label="Last Name"
-            name="lastName"
-            placeholder="Last Name"
-            form={form}
-          />
-
-          <TextField
-            label="Email Address"
-            name="email"
-            type="email"
-            placeholder="Email"
-            form={form}
-          />
-
-          <TextField
-            label="Phone"
-            name="phoneNumber"
-            placeholder="Phone Number"
-            form={form}
-          />
-
-          <PasswordField label="Password" name="password" form={form} />
-
-          <CheckboxField
-            label="I agree to the Terms & Conditions"
-            name="acceptConsent"
-            CheckboxProps={{ name: 'acceptConsent' }}
-            form={form}
-          />
-
-          <ButtonWithLoading type="submit" form={form}>
-            Sign Up
-          </ButtonWithLoading>
-        </fieldset>
-      </form>
-    </div>
-  )
+  return <SignUpForm form={form} isLoading={loginMutation.isLoading || loginMutation.isSuccess} />
 }
 
 export default SignUp

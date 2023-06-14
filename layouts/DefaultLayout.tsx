@@ -16,17 +16,7 @@ function DefaultLayout(page: ReactNode): ReactNode {
       </Head>
 
       <Div100vh>
-        <Box
-          component="div"
-          sx={{
-            display: 'grid',
-            gridTemplateRows: 'auto 1fr auto',
-            gridTemplateColumns: '100%',
-            height: '100%',
-          }}
-        >
-          {page}
-        </Box>
+        <Box>{page}</Box>
       </Div100vh>
     </>
   )

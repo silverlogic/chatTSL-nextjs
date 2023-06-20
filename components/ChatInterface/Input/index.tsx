@@ -3,15 +3,11 @@ import { IconButton, InputAdornment } from '@mui/material'
 import { FC, FormEvent, KeyboardEvent } from 'react'
 import { InputContainer, InputExplanationText, StyledOutlinedInput } from '../styled'
 import { IInput } from '../types'
+import { useState } from 'react'
 
-const Input: FC<IInput> = ({
-  isFetchingResponse,
-  setIsFetchingResponse,
-  currentQuestion,
-  userQuestions,
-  setCurrentQuestion,
-  setUserQuestions,
-}) => {
+const Input: FC<IInput> = ({ onSubmit, isLoading, disabled }) => {
+  const [currentText, setCurrentText] = useState<string>('')
+
   const isUserMessageBlank = (string: string) => {
     const validation = string.replace(/\s/g, '')
     return validation.length === 0
@@ -19,22 +15,9 @@ const Input: FC<IInput> = ({
 
   const submitAnswer = (e: FormEvent<HTMLFormElement> | KeyboardEvent<HTMLTextAreaElement>) => {
     e.preventDefault()
-    if (!isFetchingResponse && !isUserMessageBlank(currentQuestion)) {
-      setIsFetchingResponse(true)
-      const newQuestion = {
-        question: currentQuestion,
-        isUserQuestion: true,
-        image: '/assets/CJ2.png',
-      }
-      const replyQuestion = {
-        question:
-          'Yes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are right , you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are right , you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are right , you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are rightYes, you are right',
-        isUserQuestion: false,
-        image: '/assets/ChatBotProfile.png',
-        index: userQuestions.length + 2,
-      }
-      setCurrentQuestion('')
-      setUserQuestions([...userQuestions, newQuestion, replyQuestion])
+    if (!disabled && !isUserMessageBlank(currentText)) {
+      onSubmit(currentText)
+      setCurrentText('')
     }
   }
 
@@ -47,21 +30,22 @@ const Input: FC<IInput> = ({
     <InputContainer>
       <form onSubmit={(e) => submitAnswer(e)} style={{ width: '80%' }}>
         <StyledOutlinedInput
-          isFetchingResponse={isFetchingResponse}
+          isLoading={isLoading}
           placeholder="Ask a question."
-          value={currentQuestion}
-          onChange={(e) => setCurrentQuestion(e.target.value)}
+          value={currentText}
+          onChange={(e) => setCurrentText(e.target.value)}
           multiline
           minRows={1}
           maxRows={6}
           onKeyDown={handleKeyDown}
+          disabled={disabled}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton type="submit" disabled={isFetchingResponse}>
+              <IconButton type="submit" disabled={disabled}>
                 <Send
                   sx={(theme) => ({
                     color:
-                      currentQuestion && !isFetchingResponse
+                      currentText && !disabled
                         ? theme.palette.primary[500]
                         : theme.palette.surface[500],
                   })}

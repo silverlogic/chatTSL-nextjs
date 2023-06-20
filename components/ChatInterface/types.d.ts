@@ -1,25 +1,22 @@
 import { OutlinedInputProps, BoxProps } from '@mui/material'
 
-interface IQuestionAndAnswer {
-  question: string
-  isUserQuestion: boolean
-  image: string
-  index?: number
+interface IInput {
+  onSubmit: (string) => void,
+  isLoading: boolean,
+  disabled: boolean
 }
 
-type IUserQuestions = Array<IQuestionAndAnswer> | []
+interface IWebSocketMessage<PayloadType> {
+  eventType: string,
+  payload: PayloadType
+}
 
-interface IInput {
-  isFetchingResponse: boolean
-  setIsFetchingResponse: (newValue: boolean) => void
-  currentQuestion: string
-  userQuestions: IUserQuestions
-  setCurrentQuestion: (newQuestion: string) => void
-  setUserQuestions: (newArray: IUserQuestions) => void
+interface IChatInterfaceProps {
+  chat: IOpenAIChat
 }
 
 interface IStyledOutlinedInputProps extends OutlinedInputProps {
-  isFetchingResponse: boolean
+  isLoading: boolean
 }
 
 interface IMessageContainerProps extends BoxProps {

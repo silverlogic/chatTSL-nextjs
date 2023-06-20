@@ -5,4 +5,8 @@ const withTM = require('next-transpile-modules')(['@baseapp-frontend/core','@bas
 module.exports = withTM({
   reactStrictMode: true,
   pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
+  images: {
+    unoptimized: true,
+    domains: ['localhost']
+  }
 })

@@ -1,43 +1,43 @@
 import { Box, OutlinedInput, styled, Typography } from '@mui/material'
 import { IMessageContainerProps, IStyledOutlinedInputProps } from './types'
 
-export const StyledOutlinedInput = styled(OutlinedInput)<IStyledOutlinedInputProps>(
-  ({ theme, isFetchingResponse }) => ({
-    ...theme.typography.body2,
-    color: theme.palette.surface[50],
-    width: '100%',
-    background: theme.palette.surface[800],
+export const StyledOutlinedInput = styled(OutlinedInput, {
+  shouldForwardProp: (props) => props !== 'isLoading',
+})<IStyledOutlinedInputProps>(({ theme, isLoading }) => ({
+  ...theme.typography.body2,
+  color: theme.palette.surface[50],
+  width: '100%',
+  background: theme.palette.surface[800],
+  borderRadius: '12px',
+  '& .Mui-disabled .MuiOutlinedInput-input': {
+    '&::placeholder': {
+      color: theme.palette.surface[50],
+    },
+  },
+  '& .MuiOutlinedInput-input': {
+    '&::placeholder': {
+      ...theme.typography.body2,
+      opacity: 1,
+      color: theme.palette.surface[500],
+    },
+  },
+  '& .MuiOutlinedInput-notchedOutline': {
+    border: `1px solid ${theme.palette.surface[600]}`,
     borderRadius: '12px',
-    '& .Mui-disabled .MuiOutlinedInput-input': {
-      '&::placeholder': {
-        color: theme.palette.surface[50],
-      },
-    },
-    '& .MuiOutlinedInput-input': {
-      '&::placeholder': {
-        ...theme.typography.body2,
-        opacity: 1,
-        color: theme.palette.surface[500],
-      },
-    },
-    '& .MuiOutlinedInput-notchedOutline': {
-      border: `1px solid ${theme.palette.surface[600]}`,
-      borderRadius: '12px',
-    },
-    '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.surface[600],
-    },
-    '&.Mui-disabled:hover  .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.surface[600],
-    },
-    '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.primary[500],
-    },
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: !isFetchingResponse ? theme.palette.primary[500] : theme.palette.surface[600],
-    },
-  }),
-)
+  },
+  '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.surface[600],
+  },
+  '&.Mui-disabled:hover  .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.surface[600],
+  },
+  '&:hover .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.primary[500],
+  },
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    borderColor: !isLoading ? theme.palette.primary[500] : theme.palette.surface[600],
+  },
+}))
 
 export const InputContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -69,17 +69,17 @@ export const MessageContentContainer = styled(Box)(({ theme }) => ({
   width: '75%',
 }))
 
-export const MessageContainer = styled(Box)<IMessageContainerProps>(
-  ({ theme, isUserQuestion }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: isUserQuestion ? 'transparent' : theme.palette.surface[700],
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(4.75),
-    wordBreak: 'break-word',
-  }),
-)
+export const MessageContainer = styled(Box, {
+  shouldForwardProp: (props) => props !== 'isUserQuestion',
+})<IMessageContainerProps>(({ theme, isUserQuestion }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: isUserQuestion ? 'transparent' : theme.palette.surface[700],
+  paddingTop: theme.spacing(3),
+  paddingBottom: theme.spacing(4.75),
+  wordBreak: 'break-word',
+}))
 
 export const LoadingDot = styled(Box)(({ theme }) => ({
   height: '8px',
@@ -99,4 +99,10 @@ export const ChatInterfaceContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
+}))
+
+export const WSConnectionStateText = styled(Typography)(({ theme }) => ({
+  ...theme.typography.body1,
+  color: theme.palette.surface[50],
+  fontWeight: 300,
 }))

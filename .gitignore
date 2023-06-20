@@ -36,3 +36,9 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# workspace files are user-specific
+*.sublime-workspace
+**/*.code-workspace
+**/.vscode
+.idea/

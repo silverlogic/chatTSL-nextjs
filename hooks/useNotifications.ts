@@ -10,7 +10,7 @@ export default function useNotifications() {
   }
 
   const showMessage = (message: string, variant: VariantType = 'info') => {
-    enqueueSnackbar(message, {anchorOrigin: { horizontal: 'left', vertical: 'bottom' }, variant})
+    enqueueSnackbar(message, {anchorOrigin: { horizontal: 'right', vertical: 'top' }, variant})
   }
 
   const showSuccess = (message: string) => {

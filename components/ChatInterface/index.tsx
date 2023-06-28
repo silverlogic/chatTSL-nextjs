@@ -1,4 +1,5 @@
-import { Box, Typography } from '@mui/material'
+import Link from 'next/link'
+import { Box, Typography, useTheme } from '@mui/material'
 import { useUser } from '@baseapp-frontend/core'
 import Image from 'next/image'
 import React, { useState, useEffect, useRef } from 'react'
@@ -6,7 +7,10 @@ import {
   ChatInterfaceContainer,
   MessageContainer,
   MessageContentContainer,
+  MessageInnerContentContainer,
   WSConnectionStateText,
+  TettraPagesContainer,
+  TettraPage,
 } from './styled'
 import Input from './Input'
 import { IChatInterfaceProps } from './types'
@@ -18,10 +22,11 @@ import humps from 'humps'
 import _ from 'lodash'
 import useNotifications from '../../hooks/useNotifications'
 import { formatApiErrorMessages } from '../../utils/ErrorUtils'
+import { IUser, IUserContext } from '@baseapp-frontend/core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faExternalLink } from '@fortawesome/free-solid-svg-icons'
 
 export const websocketsApiBaseURL = process.env.NEXT_PUBLIC_API_WEBSOCKET_BASE_URL
-
-import { IUser, IUserContext } from '@baseapp-frontend/core'
 
 interface IUserProfile extends IUser {
   avatar: {
@@ -35,6 +40,7 @@ export interface IUseUserProfile extends IUserContext {
 
 const ChatInterface = ({ chat }: IChatInterfaceProps) => {
   const { user, isLoading } = useUser() as IUseUserProfile
+  const theme = useTheme()
   const notifications = useNotifications()
 
   const [chatMessages, setChatMessages] = useState<IOpenAIChatMessages>([])
@@ -78,7 +84,11 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
 
   const authToken = Cookies.get('Authorization')
   if (authToken) {
-    defaultOptions.protocols = [...defaultOptions.protocols as string[], 'Authorization', authToken]
+    defaultOptions.protocols = [
+      ...(defaultOptions.protocols as string[]),
+      'Authorization',
+      authToken,
+    ]
   }
 
   const [socketUrl, setSocketUrl] = useState(`${websocketsApiBaseURL}/chat/${chat.id}/`)
@@ -149,10 +159,14 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
   }, [readyState, chat])
 
   const sendEvent = (eventType: string, eventData: object) => {
-    sendMessage(JSON.stringify(humps.decamelizeKeys({
-      eventType: eventType,
-      eventData: eventData
-    })))
+    sendMessage(
+      JSON.stringify(
+        humps.decamelizeKeys({
+          eventType: eventType,
+          eventData: eventData,
+        }),
+      ),
+    )
   }
 
   const sendPing = () => {
@@ -174,44 +188,61 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
         {allChatMessages.map((chatMessage, index: number) => (
           <MessageContainer isUserQuestion={chatMessage.role == 'user'} key={index}>
             <MessageContentContainer>
-              {(() => {
-                switch (chatMessage.role) {
-                  case 'system':
-                    return <SystemMessage response={chatMessage.content} />
-                  case 'user':
-                    return (
-                      <>
-                        <Box sx={{ flexShrink: 0 }}>
-                          <Image
-                            width="48px"
-                            height="48px"
-                            src={user.avatar.fullSize}
-                            alt="avatar"
-                            style={{ borderRadius: '50%' }}
+              <MessageInnerContentContainer>
+                {(() => {
+                  switch (chatMessage.role) {
+                    case 'system':
+                      return <SystemMessage response={chatMessage.content} />
+                    case 'user':
+                      return (
+                        <>
+                          <Box sx={{ flexShrink: 0 }}>
+                            <Image
+                              width="48px"
+                              height="48px"
+                              src={user.avatar.fullSize}
+                              alt="avatar"
+                              style={{ borderRadius: '50%' }}
+                            />
+                          </Box>
+                          <Typography variant="body1" sx={{ marginTop: '12px' }}>
+                            {chatMessage.content}
+                          </Typography>
+                        </>
+                      )
+                    case 'assistant':
+                      return (
+                        <>
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: chatMessage.content,
+                            }}
                           />
-                        </Box>
-                        <Typography variant="body1" sx={{ marginTop: '12px' }}>
-                          {chatMessage.content}
-                        </Typography>
-                      </>
-                    )
-                  case 'assistant':
-                    return (
-                      // TOOD: Implement animated messages with HTML formatting
-                      // <AssistantMessage
-                      //   animated={index === allChatMessages.length - 1}
-                      //   response={chatMessage.content}
-                      // />
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: chatMessage.content,
-                        }}
-                      />
-                    )
-                  default:
-                    return null
-                }
-              })()}
+                        </>
+                      )
+                    default:
+                      return null
+                  }
+                })()}
+              </MessageInnerContentContainer>
+              {!_.isEmpty(chatMessage.tettraPages) && (
+                <TettraPagesContainer>
+                  <Typography variant="subtitle2">Learn More:</Typography>
+                  {chatMessage.tettraPages.map((tettraPage, index: number) => (
+                    <Link href={tettraPage.url} key={index}>
+                      <a rel="noopener noreferrer" target="_blank" style={{ textDecoration: 'none' }}>
+                        <TettraPage key={index}>
+                          <Typography variant="subtitle2">{tettraPage.pageTitle}</Typography>
+                          <FontAwesomeIcon
+                            icon={faExternalLink}
+                            style={{ fontSize: 14, color: theme.palette.surface[50] }}
+                          />
+                        </TettraPage>
+                      </a>
+                    </Link>
+                  ))}
+                </TettraPagesContainer>
+              )}
             </MessageContentContainer>
           </MessageContainer>
         ))}

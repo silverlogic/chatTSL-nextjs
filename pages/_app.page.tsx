@@ -14,6 +14,11 @@ import DefaultLayout from 'layouts/DefaultLayout'
 import theme from 'styles/theme'
 
 import 'public/fonts/fonts.css'
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
+import { config as faConfig } from "@fortawesome/fontawesome-svg-core";
+// Tell Font Awesome to skip adding the CSS automatically since it's already imported above
+faConfig.autoAddCss = false;
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()

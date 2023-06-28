@@ -65,8 +65,15 @@ export const InputExplanationText = styled(Typography)(({ theme }) => ({
 
 export const MessageContentContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
+  flexDirection: 'column',
   gap: theme.spacing(3),
   width: '75%',
+}))
+
+export const MessageInnerContentContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: theme.spacing(3),
+  width: '100%',
 }))
 
 export const MessageContainer = styled(Box, {
@@ -105,4 +112,20 @@ export const WSConnectionStateText = styled(Typography)(({ theme }) => ({
   ...theme.typography.body1,
   color: theme.palette.surface[50],
   fontWeight: 300,
+}))
+
+export const TettraPagesContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  gap: theme.spacing(1),
+}))
+
+export const TettraPage = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  borderRadius: theme.spacing(0.5),
+  gap: theme.spacing(1),
+  background: theme.palette.surface[800],
+  padding: theme.spacing(0.5, 1.5, 0.5, 1.5),
 }))

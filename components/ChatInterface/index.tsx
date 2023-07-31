@@ -25,6 +25,7 @@ import { formatApiErrorMessages } from '../../utils/ErrorUtils'
 import { IUser, IUserContext } from '@baseapp-frontend/core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons'
+import AssistantChatMessageFeedback from './AssistantChatMessageFeedback'
 
 export const websocketsApiBaseURL = process.env.NEXT_PUBLIC_API_WEBSOCKET_BASE_URL
 
@@ -39,16 +40,21 @@ export interface IUseUserProfile extends IUserContext {
 }
 
 const ChatInterface = ({ chat }: IChatInterfaceProps) => {
-  const { user, isLoading } = useUser() as IUseUserProfile
+  const { user } = useUser() as IUseUserProfile
   const theme = useTheme()
   const notifications = useNotifications()
 
   const [chatMessages, setChatMessages] = useState<IOpenAIChatMessages>([])
+  const [allChatMessages, setAllChatMessages] = useState<IOpenAIChatMessages>([])
   const [isWaitingForChatbot, setisWaitingForChatbot] = useState<boolean>(false)
 
   const boxRef = useRef<HTMLDivElement | null>(null)
+  const autoScrollEnabledRef = useRef<boolean>(true)
 
   const scrollToBottom = () => {
+    if (!autoScrollEnabledRef.current) {
+      return
+    }
     if (boxRef.current) {
       boxRef.current.scrollTop = boxRef.current.scrollHeight
     }
@@ -63,7 +69,7 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
       }
     })
 
-    const observerConfig = { childList: true, subtree: true }
+    const observerConfig = { childList: true, subtree: true, attributes: false }
 
     if (container) {
       observer.observe(container, observerConfig)
@@ -72,7 +78,7 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
     return () => {
       observer.disconnect()
     }
-  }, [])
+  }, [boxRef])
 
   const defaultOptions: Options = {
     shouldReconnect: (closeEvent) => true,
@@ -112,6 +118,7 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
             console.info(eventType)
             break
           case 'on_message_created':
+            autoScrollEnabledRef.current = true
             const chatMessage = eventData as IOpenAIChatMessage
             setChatMessages([...chatMessages, chatMessage])
             switch (chatMessage.role) {
@@ -125,6 +132,7 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
             break
           case 'on_error':
             console.error('websocket event error: ', jsonData)
+            setisWaitingForChatbot(false)
             const errorMessages = formatApiErrorMessages(eventData)
             notifications.showMessage(errorMessages.join('\n\n'), 'error')
             break
@@ -139,6 +147,7 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
     },
     onError: (event) => {
       console.error('onError', event)
+      setisWaitingForChatbot(false)
       notifications.showError(event)
     },
     ...defaultOptions,
@@ -179,12 +188,22 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
     })
   }
 
-  const allChatMessages = [...chat.messages, ...chatMessages]
+  useEffect(() => {
+    setAllChatMessages([...chat.messages, ...chatMessages])
+  }, [chat, chatMessages])
 
   return (
     <ChatInterfaceContainer>
       <WSConnectionStateText>WS Connection: {connectionStatus}</WSConnectionStateText>
-      <Box sx={{ overflow: 'auto', paddingBottom: '9rem' }} ref={boxRef}>
+      <Box
+        sx={{ overflow: 'auto', paddingBottom: '9rem' }}
+        ref={boxRef}
+        onScroll={(e) => {
+          const target = e.target as HTMLInputElement
+          const isAtBottom = target.scrollHeight - target.scrollTop === target.clientHeight
+          autoScrollEnabledRef.current = isAtBottom
+        }}
+      >
         {allChatMessages.map((chatMessage, index: number) => (
           <MessageContainer isUserQuestion={chatMessage.role == 'user'} key={index}>
             <MessageContentContainer>
@@ -214,6 +233,7 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
                       return (
                         <>
                           <div
+                            style={{ flexGrow: 1 }}
                             dangerouslySetInnerHTML={{
                               __html: chatMessage.content,
                             }}
@@ -224,13 +244,33 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
                       return null
                   }
                 })()}
+                {chatMessage.role == 'assistant' && (
+                  <AssistantChatMessageFeedback
+                    chatMessage={chatMessage}
+                    onChatMessageUpdated={(_chatMessage: IOpenAIChatMessage) => {
+                      setChatMessages((prevChatMessages) =>
+                        prevChatMessages.map((message) =>
+                          message.id === _chatMessage.id ? _chatMessage : message,
+                        ),
+                      )
+                    }}
+                    onError={(error: unknown) => {
+                      console.error(error)
+                      notifications.showError(error)
+                    }}
+                  />
+                )}
               </MessageInnerContentContainer>
               {!_.isEmpty(chatMessage.tettraPages) && (
                 <TettraPagesContainer>
                   <Typography variant="subtitle2">Learn More:</Typography>
                   {chatMessage.tettraPages.map((tettraPage, index: number) => (
                     <Link href={tettraPage.url} key={index}>
-                      <a rel="noopener noreferrer" target="_blank" style={{ textDecoration: 'none' }}>
+                      <a
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        style={{ textDecoration: 'none' }}
+                      >
                         <TettraPage key={index}>
                           <Typography variant="subtitle2">{tettraPage.pageTitle}</Typography>
                           <FontAwesomeIcon
@@ -257,7 +297,7 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
       <Input
         onSubmit={(text) => sendChatMessage(text)}
         isLoading={isWaitingForChatbot}
-        disabled={readyState != ReadyState.OPEN}
+        disabled={readyState != ReadyState.OPEN || isWaitingForChatbot}
       />
     </ChatInterfaceContainer>
   )

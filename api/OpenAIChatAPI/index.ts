@@ -2,7 +2,7 @@ import axios, { apiBaseURL } from '../axios'
 
 const baseURL = `${apiBaseURL}/chatbot/open-ai`
 
-export default class ChatbotAPI {
+export default class OpenAIChatAPI {
   static create(data: IOpenAIChatCreate): Promise<IOpenAIChat> {
     return axios.post(`${baseURL}`, data)
   }

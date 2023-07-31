@@ -1,22 +1,11 @@
-interface IOpenAIChatCreate {
-  model: string
-}
-
-interface IOpenAIChat {
-  id: number,
-  user: number,
-  model: string
-  messages: IOpenAIChatMessages
-}
-
 interface IOpenAIChatMessage {
   id: number,
   chat: number
   role: string
   content: string
   tettraPages: Array<IOpenAIChatMessageTettraPage> | []
+  rating: string
 }
-
 
 interface IOpenAIChatMessageTettraPage {
   id: number,
@@ -32,3 +21,7 @@ interface IOpenAIChatMessageTettraPage {
 }
 
 type IOpenAIChatMessages = Array<IOpenAIChatMessage> | []
+
+interface IOpenAIChatMessageUpdate {
+  rating: string
+}

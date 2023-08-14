@@ -1,4 +1,5 @@
 import { Box, OutlinedInput, styled, Typography } from '@mui/material'
+import CircleIcon from '@mui/icons-material/Circle'
 import { IMessageContainerProps, IStyledOutlinedInputProps } from './types'
 
 export const StyledOutlinedInput = styled(OutlinedInput, {
@@ -51,10 +52,6 @@ export const InputContainer = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(-6.25),
   paddingBottom: theme.spacing(2),
   flexShrink: 0,
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  right: 0,
 }))
 
 export const InputExplanationText = styled(Typography)(({ theme }) => ({
@@ -108,10 +105,32 @@ export const ChatInterfaceContainer = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between',
 }))
 
+export const NoDataContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  width: '100%',
+  height: '100%',
+  padding: theme.spacing(1),
+  alignItems: 'center',
+  justifyContent: 'center',
+}))
+
+export const WSConnectionStateContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  padding: theme.spacing(1),
+  gap: theme.spacing(1),
+}))
+
 export const WSConnectionStateText = styled(Typography)(({ theme }) => ({
-  ...theme.typography.body1,
+  ...theme.typography.h6,
   color: theme.palette.surface[50],
   fontWeight: 300,
+}))
+
+export const WSConnectionStateIndicatorDot = styled(CircleIcon)(({ theme }) => ({
+  width: theme.spacing(1.5),
+  height: theme.spacing(1.5),
 }))
 
 export const TettraPagesContainer = styled(Box)(({ theme }) => ({

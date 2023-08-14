@@ -8,6 +8,8 @@ import { useState } from 'react'
 const Input: FC<IInput> = ({ onSubmit, isLoading, disabled }) => {
   const [currentText, setCurrentText] = useState<string>('')
 
+  const isSubmitDisabled = disabled || isLoading
+
   const isUserMessageBlank = (string: string) => {
     const validation = string.replace(/\s/g, '')
     return validation.length === 0
@@ -15,7 +17,7 @@ const Input: FC<IInput> = ({ onSubmit, isLoading, disabled }) => {
 
   const submitAnswer = (e: FormEvent<HTMLFormElement> | KeyboardEvent<HTMLTextAreaElement>) => {
     e.preventDefault()
-    if (!disabled && !isUserMessageBlank(currentText)) {
+    if (!isSubmitDisabled && !isUserMessageBlank(currentText)) {
       onSubmit(currentText)
       setCurrentText('')
     }
@@ -26,6 +28,7 @@ const Input: FC<IInput> = ({ onSubmit, isLoading, disabled }) => {
       submitAnswer(e)
     }
   }
+
   return (
     <InputContainer>
       <form onSubmit={(e) => submitAnswer(e)} style={{ width: '80%' }}>
@@ -41,11 +44,11 @@ const Input: FC<IInput> = ({ onSubmit, isLoading, disabled }) => {
           disabled={disabled}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton type="submit" disabled={disabled}>
+              <IconButton type="submit" disabled={isSubmitDisabled}>
                 <Send
                   sx={(theme) => ({
                     color:
-                      currentText && !disabled
+                      currentText && !isSubmitDisabled
                         ? theme.palette.primary[500]
                         : theme.palette.surface[500],
                   })}

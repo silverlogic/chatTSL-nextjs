@@ -1,9 +1,8 @@
 import Link from 'next/link'
 import { Box, SvgIconProps, Typography, useTheme } from '@mui/material'
-import CircleIcon from '@mui/icons-material/Circle'
 import { useUser } from '@baseapp-frontend/core'
 import Image from 'next/image'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import {
   ChatInterfaceContainer,
   NoDataContainer,
@@ -30,6 +29,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExternalLink } from '@fortawesome/free-solid-svg-icons'
 import AssistantChatMessageFeedback from './AssistantChatMessageFeedback'
 import LogoIcon from '../Icons/LogoIcon'
+import useMutationObserver from '../../hooks/useMutationObserver'
 
 export const websocketsApiBaseURL = process.env.NEXT_PUBLIC_API_WEBSOCKET_BASE_URL
 
@@ -55,37 +55,24 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
   const boxRef = useRef<HTMLDivElement | null>(null)
   const autoScrollEnabledRef = useRef<boolean>(true)
 
-  const scrollToBottom = () => {
-    if (!autoScrollEnabledRef.current) {
-      return
-    }
-    if (boxRef.current) {
-      boxRef.current.scrollTop = boxRef.current.scrollHeight
-    }
-  }
 
-  useEffect(() => {
-    const container = boxRef.current
-
-    const observer = new MutationObserver(() => {
-      if (container) {
-        scrollToBottom()
+  const onBoxRefMutation = useCallback(() => {
+      if (boxRef.current) {
+        if (!autoScrollEnabledRef.current) {
+          return
+        }
+        if (boxRef.current) {
+          boxRef.current.scrollTop = boxRef.current.scrollHeight
+        }
       }
-    })
+    },
+    [autoScrollEnabledRef]
+  )
 
-    const observerConfig = { childList: true, subtree: true, attributes: false }
-
-    if (container) {
-      observer.observe(container, observerConfig)
-    }
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [boxRef])
+  useMutationObserver(boxRef.current, onBoxRefMutation);
 
   const defaultOptions: Options = {
-    shouldReconnect: (closeEvent) => true,
+    shouldReconnect: () => true,
     reconnectAttempts: Infinity,
     reconnectInterval: 5000,
     retryOnError: true,
@@ -101,8 +88,8 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
     ]
   }
 
-  const [socketUrl, setSocketUrl] = useState(`${websocketsApiBaseURL}/chat/${chat.id}/`)
-  const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl, {
+  const [socketUrl] = useState(`${websocketsApiBaseURL}/chat/${chat.id}/`)
+  const { sendMessage, readyState } = useWebSocket(socketUrl, {
     onClose: (event) => {
       console.log('onClose', event)
       setisWaitingForChatbot(false)
@@ -216,7 +203,11 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
         </NoDataContainer>
       ) : (
         <Box
-          sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', overflow: 'auto' }}
+          sx={{
+            flexGrow: 1,
+            overflowX: 'auto',
+            overflowY: 'scroll',
+          }}
           ref={boxRef}
           onScroll={(e) => {
             const target = e.target as HTMLInputElement

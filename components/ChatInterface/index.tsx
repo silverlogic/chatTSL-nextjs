@@ -5,6 +5,8 @@ import Image from 'next/image'
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import {
   ChatInterfaceContainer,
+  ChatInterfaceContentContainer,
+  ChatInterfaceContent,
   NoDataContainer,
   MessageContainer,
   MessageContentContainer,
@@ -30,6 +32,9 @@ import { faExternalLink } from '@fortawesome/free-solid-svg-icons'
 import AssistantChatMessageFeedback from './AssistantChatMessageFeedback'
 import LogoIcon from '../Icons/LogoIcon'
 import useMutationObserver from '../../hooks/useMutationObserver'
+import Sidebar from './Sidebar'
+import OpenAIChatAPI from '../../api/OpenAIChatAPI'
+import { CircularProgress } from './styled'
 
 export const websocketsApiBaseURL = process.env.NEXT_PUBLIC_API_WEBSOCKET_BASE_URL
 
@@ -43,7 +48,7 @@ export interface IUseUserProfile extends IUserContext {
   user: IUserProfile
 }
 
-const ChatInterface = ({ chat }: IChatInterfaceProps) => {
+const ChatInterface = ({ chat, onChatUpdated }: IChatInterfaceProps) => {
   const { user } = useUser() as IUseUserProfile
   const theme = useTheme()
   const notifications = useNotifications()
@@ -51,25 +56,29 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
   const [chatMessages, setChatMessages] = useState<IOpenAIChatMessages>([])
   const [allChatMessages, setAllChatMessages] = useState<IOpenAIChatMessages>([])
   const [isWaitingForChatbot, setisWaitingForChatbot] = useState<boolean>(false)
+  const [selectedCategory, setSelectedCategory] = useState<ITettraPageCategory | null>(
+    chat.tettraPageCategoryFilter,
+  )
+  const [selectedSubcategory, setSelectedSubcategory] = useState<ITettraPageSubcategory | null>(
+    chat.tettraPageSubcategoryFilter,
+  )
+  const [isUpdatingChat, setIsUpdatingChat] = useState<boolean>(false)
 
   const boxRef = useRef<HTMLDivElement | null>(null)
   const autoScrollEnabledRef = useRef<boolean>(true)
 
-
   const onBoxRefMutation = useCallback(() => {
-      if (boxRef.current) {
-        if (!autoScrollEnabledRef.current) {
-          return
-        }
-        if (boxRef.current) {
-          boxRef.current.scrollTop = boxRef.current.scrollHeight
-        }
+    if (boxRef.current) {
+      if (!autoScrollEnabledRef.current) {
+        return
       }
-    },
-    [autoScrollEnabledRef]
-  )
+      if (boxRef.current) {
+        boxRef.current.scrollTop = boxRef.current.scrollHeight
+      }
+    }
+  }, [autoScrollEnabledRef])
 
-  useMutationObserver(boxRef.current, onBoxRefMutation);
+  useMutationObserver(boxRef.current, onBoxRefMutation)
 
   const defaultOptions: Options = {
     shouldReconnect: () => true,
@@ -148,7 +157,7 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
     if (readyState == ReadyState.OPEN) {
       sendPing()
     }
-  }, [readyState, chat])
+  }, [readyState])
 
   const sendEvent = (eventType: string, eventData: object) => {
     sendMessage(
@@ -176,9 +185,22 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
     setAllChatMessages([...chat.messages, ...chatMessages])
   }, [chat, chatMessages])
 
+  const updateChat = async (update: IOpenAIChatUpdate) => {
+    try {
+      setIsUpdatingChat(true)
+      const updatedChat = await OpenAIChatAPI.update(chat.id, update)
+      onChatUpdated(updatedChat)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsUpdatingChat(false)
+    }
+  }
+
   return (
     <ChatInterfaceContainer>
       <WSConnectionStateContainer>
+        {isUpdatingChat && <CircularProgress size={theme.spacing(1.5)} />}
         {(() => {
           const _iconProps: SvgIconProps = {}
           switch (readyState) {
@@ -197,119 +219,143 @@ const ChatInterface = ({ chat }: IChatInterfaceProps) => {
           return <WSConnectionStateIndicatorDot {..._iconProps} />
         })()}
       </WSConnectionStateContainer>
-      {_.isEmpty(allChatMessages) ? (
-        <NoDataContainer>
-          <LogoIcon />
-        </NoDataContainer>
-      ) : (
-        <Box
-          sx={{
-            flexGrow: 1,
-            overflowX: 'auto',
-            overflowY: 'scroll',
+      <ChatInterfaceContentContainer>
+        <Sidebar
+          selectedCategory={selectedCategory}
+          onCategoryChanged={(category: ITettraPageCategory | null) => {
+            setSelectedCategory(category)
+            if (chat.tettraPageCategoryFilter?.id != category?.id) {
+              updateChat({ tettraPageCategoryFilter: category?.id || null })
+            }
           }}
-          ref={boxRef}
-          onScroll={(e) => {
-            const target = e.target as HTMLInputElement
-            const isAtBottom = target.scrollHeight - target.scrollTop === target.clientHeight
-            autoScrollEnabledRef.current = isAtBottom
+          selectedSubcategory={selectedSubcategory}
+          onSubcategoryChanged={(subcategory: ITettraPageSubcategory | null) => {
+            setSelectedSubcategory(subcategory)
+            if (chat.tettraPageSubcategoryFilter?.id != subcategory?.id) {
+              updateChat({ tettraPageSubcategoryFilter: subcategory?.id || null })
+            }
           }}
-        >
-          {allChatMessages.map((chatMessage, index: number) => (
-            <MessageContainer isUserQuestion={chatMessage.role == 'user'} key={index}>
-              <MessageContentContainer>
-                <MessageInnerContentContainer>
-                  {(() => {
-                    switch (chatMessage.role) {
-                      case 'system':
-                        return <SystemMessage response={chatMessage.content} />
-                      case 'user':
-                        return (
-                          <>
-                            <Box sx={{ flexShrink: 0 }}>
-                              <Image
-                                width="48px"
-                                height="48px"
-                                src={user.avatar.fullSize}
-                                alt="avatar"
-                                style={{ borderRadius: '50%' }}
-                              />
-                            </Box>
-                            <Typography variant="body1" sx={{ marginTop: '12px' }}>
-                              {chatMessage.content}
-                            </Typography>
-                          </>
-                        )
-                      case 'assistant':
-                        return (
-                          <>
-                            <div
-                              style={{ flexGrow: 1 }}
-                              dangerouslySetInnerHTML={{
-                                __html: chatMessage.content,
-                              }}
-                            />
-                          </>
-                        )
-                      default:
-                        return null
-                    }
-                  })()}
-                  {chatMessage.role == 'assistant' && (
-                    <AssistantChatMessageFeedback
-                      chatMessage={chatMessage}
-                      onChatMessageUpdated={(_chatMessage: IOpenAIChatMessage) => {
-                        setChatMessages((prevChatMessages) =>
-                          prevChatMessages.map((message) =>
-                            message.id === _chatMessage.id ? _chatMessage : message,
-                          ),
-                        )
-                      }}
-                      onError={(error: unknown) => {
-                        notifications.showError(error)
-                      }}
-                    />
-                  )}
-                </MessageInnerContentContainer>
-                {!_.isEmpty(chatMessage.tettraPages) && (
-                  <TettraPagesContainer>
-                    <Typography variant="subtitle2">Learn More:</Typography>
-                    {chatMessage.tettraPages.map((tettraPage, index: number) => (
-                      <Link href={tettraPage.url} key={index}>
-                        <a
-                          rel="noopener noreferrer"
-                          target="_blank"
-                          style={{ textDecoration: 'none' }}
-                        >
-                          <TettraPage key={index}>
-                            <Typography variant="subtitle2">{tettraPage.pageTitle}</Typography>
-                            <FontAwesomeIcon
-                              icon={faExternalLink}
-                              style={{ fontSize: 14, color: theme.palette.surface[50] }}
-                            />
-                          </TettraPage>
-                        </a>
-                      </Link>
-                    ))}
-                  </TettraPagesContainer>
-                )}
-              </MessageContentContainer>
-            </MessageContainer>
-          ))}
-          {isWaitingForChatbot && (
-            <MessageContainer isUserQuestion={false} key={Number.MAX_SAFE_INTEGER}>
-              <MessageContentContainer>
-                <LoadingDots />
-              </MessageContentContainer>
-            </MessageContainer>
+        ></Sidebar>
+        <ChatInterfaceContent>
+          {_.isEmpty(allChatMessages) ? (
+            <NoDataContainer>
+              <LogoIcon />
+            </NoDataContainer>
+          ) : (
+            <Box
+              sx={{
+                flexGrow: 1,
+                overflowX: 'auto',
+                overflowY: 'scroll',
+              }}
+              ref={boxRef}
+              onScroll={(e) => {
+                const target = e.target as HTMLInputElement
+                const isAtBottom = target.scrollHeight - target.scrollTop === target.clientHeight
+                autoScrollEnabledRef.current = isAtBottom
+              }}
+            >
+              {allChatMessages.map((chatMessage, index: number) => (
+                <MessageContainer isUserQuestion={chatMessage.role == 'user'} key={index}>
+                  <MessageContentContainer>
+                    <MessageInnerContentContainer>
+                      {(() => {
+                        switch (chatMessage.role) {
+                          case 'system':
+                            return <SystemMessage response={chatMessage.content} />
+                          case 'user':
+                            return (
+                              <>
+                                <Box sx={{ flexShrink: 0 }}>
+                                  <Image
+                                    width="48px"
+                                    height="48px"
+                                    src={user?.avatar?.fullSize}
+                                    alt="avatar"
+                                    style={{ borderRadius: '50%' }}
+                                  />
+                                </Box>
+                                <Typography variant="body1" sx={{ marginTop: '12px' }}>
+                                  {chatMessage.content}
+                                </Typography>
+                              </>
+                            )
+                          case 'assistant':
+                            return (
+                              <>
+                                <Box
+                                  component={'div'}
+                                  sx={{
+                                    flexGrow: 1,
+                                    '& a': { color: '#14AEEA' },
+                                  }}
+                                  dangerouslySetInnerHTML={{
+                                    __html: chatMessage.content,
+                                  }}
+                                ></Box>
+                              </>
+                            )
+                          default:
+                            return null
+                        }
+                      })()}
+                      {chatMessage.role == 'assistant' && (
+                        <AssistantChatMessageFeedback
+                          chatMessage={chatMessage}
+                          onChatMessageUpdated={(_chatMessage: IOpenAIChatMessage) => {
+                            setChatMessages((prevChatMessages) =>
+                              prevChatMessages.map((message) =>
+                                message.id === _chatMessage.id ? _chatMessage : message,
+                              ),
+                            )
+                          }}
+                          onError={(error: unknown) => {
+                            notifications.showError(error)
+                          }}
+                        />
+                      )}
+                    </MessageInnerContentContainer>
+                    {!_.isEmpty(chatMessage.tettraPages) && (
+                      <TettraPagesContainer>
+                        <Typography variant="subtitle2">Learn More:</Typography>
+                        {chatMessage.tettraPages.map((tettraPage, index: number) => (
+                          <Link href={tettraPage.url} key={index}>
+                            <a
+                              rel="noopener noreferrer"
+                              target="_blank"
+                              style={{ textDecoration: 'none' }}
+                            >
+                              <TettraPage key={index}>
+                                <Typography variant="subtitle2">{tettraPage.pageTitle}</Typography>
+                                <FontAwesomeIcon
+                                  icon={faExternalLink}
+                                  style={{ fontSize: 14, color: theme.palette.surface[50] }}
+                                />
+                              </TettraPage>
+                            </a>
+                          </Link>
+                        ))}
+                      </TettraPagesContainer>
+                    )}
+                  </MessageContentContainer>
+                </MessageContainer>
+              ))}
+              {isWaitingForChatbot && (
+                <MessageContainer isUserQuestion={false} key={Number.MAX_SAFE_INTEGER}>
+                  <MessageContentContainer>
+                    <LoadingDots />
+                  </MessageContentContainer>
+                </MessageContainer>
+              )}
+            </Box>
           )}
-        </Box>
-      )}
-      <Input
-        onSubmit={(text) => sendChatMessage(text)}
-        isLoading={isWaitingForChatbot}
-        disabled={readyState != ReadyState.OPEN}
-      />
+          <Input
+            onSubmit={(text) => sendChatMessage(text)}
+            isLoading={isWaitingForChatbot}
+            disabled={readyState != ReadyState.OPEN}
+          />
+        </ChatInterfaceContent>
+      </ChatInterfaceContentContainer>
     </ChatInterfaceContainer>
   )
 }

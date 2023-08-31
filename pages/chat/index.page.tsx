@@ -1,31 +1,51 @@
+import React, { useState, useEffect } from 'react'
 import { useUser } from '@baseapp-frontend/core'
-import { useQuery } from 'react-query'
+import { useMutation } from 'react-query'
 import ChatInterface from 'components/ChatInterface'
 import VerifyEmail from 'components/VerifyEmail'
 import OpenAIChatAPI from '../../api/OpenAIChatAPI'
 
 const Chat = () => {
   const { user } = useUser({
-    redirectTo: "/",
+    redirectTo: '/',
   })
 
-  const openAIChat = useQuery({
-    queryKey: ['openAIChat'],
-    queryFn: () => OpenAIChatAPI.create({ model: "gpt-3.5-turbo" }),
-    enabled: !!user,
+  const [chat, setChat] = useState<IOpenAIChat | undefined>()
+
+  const { isLoading, mutate } = useMutation({
+    mutationKey: ['openAIChat'],
+    mutationFn: async (newChat: IOpenAIChat) => {
+      setChat(newChat)
+    }
   })
 
-  const { data, isLoading } = openAIChat
+  async function createChat() {
+    const chat = await OpenAIChatAPI.create({ model: "gpt-3.5-turbo" })
+    mutate(chat)
+  }
+
+  useEffect(() => {
+    if (!chat) {
+      createChat()
+    }
+  }, [chat])
 
   if (user && !user.isEmailVerified) {
     return <VerifyEmail />
   }
 
-  if (isLoading || !data) {
+  if (isLoading || !chat) {
     return <div />
   }
 
-  return <ChatInterface chat={data}/>
+  return (
+    <ChatInterface
+      chat={chat}
+      onChatUpdated={(updatedChat) => {
+        mutate(updatedChat)
+      }}
+    />
+  )
 }
 
 export default Chat

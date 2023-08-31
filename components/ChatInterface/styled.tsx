@@ -1,6 +1,8 @@
 import { Box, OutlinedInput, styled, Typography } from '@mui/material'
 import CircleIcon from '@mui/icons-material/Circle'
 import { IMessageContainerProps, IStyledOutlinedInputProps } from './types'
+import { CircularProgress as MuiCircularProgress, CircularProgressProps } from '@mui/material'
+import { FC } from 'react'
 
 export const StyledOutlinedInput = styled(OutlinedInput, {
   shouldForwardProp: (props) => props !== 'isLoading',
@@ -86,18 +88,39 @@ export const MessageContainer = styled(Box, {
 }))
 
 export const LoadingDot = styled(Box)(({ theme }) => ({
-  height: '8px',
-  width: '8px',
+  height: theme.spacing(1.5),
+  width: theme.spacing(1.5),
   background: theme.palette.surface[50],
-  borderRadius: '4px',
+  borderRadius: theme.spacing(0.75),
   display: 'inline-block',
   marginRight: theme.spacing(1),
   marginTop: theme.spacing(2.5),
 }))
 
+export const CircularProgress = styled(MuiCircularProgress)(({ theme }) => ({
+  height: theme.spacing(1.5),
+  width: theme.spacing(1.5),
+})) as unknown as FC<CircularProgressProps>
+
 export const ChatInterfaceContainer = styled(Box)(({ theme }) => ({
   background: theme.palette.surface[800],
   height: '100vh',
+  color: theme.palette.surface[50],
+  overflow: 'hidden',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+}))
+
+export const ChatInterfaceContentContainer = styled(Box)(({ theme }) => ({
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'row',
+}))
+
+export const ChatInterfaceContent = styled(Box)(({ theme }) => ({
+  flexGrow: 1,
+  background: theme.palette.surface[800],
   color: theme.palette.surface[50],
   overflow: 'hidden',
   display: 'flex',
@@ -120,6 +143,9 @@ export const WSConnectionStateContainer = styled(Box)(({ theme }) => ({
   flexWrap: 'wrap',
   padding: theme.spacing(1),
   gap: theme.spacing(1),
+  justifyContent: 'flex-end',
+  position: 'absolute',
+  right: '15px',
 }))
 
 export const WSConnectionStateText = styled(Typography)(({ theme }) => ({

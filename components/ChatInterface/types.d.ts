@@ -13,6 +13,7 @@ interface IWebSocketMessage<PayloadType> {
 
 interface IChatInterfaceProps {
   chat: IOpenAIChat
+  onChatUpdated: (updatedChat: IOpenAIChat) => void,
 }
 
 interface IStyledOutlinedInputProps extends OutlinedInputProps {

@@ -10,4 +10,8 @@ export default class OpenAIChatAPI {
   static get(id: number): Promise<IOpenAIChat> {
     return axios.get(`${baseURL}/${id}`)
   }
+
+  static update(chatId: number, data: IOpenAIChatUpdate): Promise<IOpenAIChat> {
+    return axios.patch(`${baseURL}/${chatId}`, data)
+  }
 }

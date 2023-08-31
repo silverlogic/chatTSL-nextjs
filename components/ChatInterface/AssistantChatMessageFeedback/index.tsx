@@ -1,9 +1,6 @@
 import { useState } from 'react'
-import { Box, useTheme } from '@mui/material'
-import { ButtonWithLoading } from '@baseapp-frontend/design-system-mui'
 import { IMessageFeedbackButtonProps } from './types'
 import OpenAIChatMessageAPI from '../../../api/OpenAIChatMessageAPI'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faThumbsUp as faThumbsUpSolid,
   faThumbsDown as faThumbsDownSolid,
@@ -20,7 +17,6 @@ const AssistantChatMessageFeedback = ({
   onError,
   ...props
 }: IMessageFeedbackButtonProps) => {
-  const theme = useTheme()
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const updateChatMessage = async (rating: string) => {

@@ -8,6 +8,7 @@ export const Container = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   backgroundColor: theme.palette.surface[900],
   minWidth: '337px',
+  width: '22%',
   height: 'calc(100% - 28px)',
   borderWidth: '0px 1px 0px 0px',
   borderColor: theme.palette.surface[400],
@@ -61,7 +62,7 @@ export const CategoryLabel = styled(Typography, {
   fontFamily: 'Source Serif Pro, sans-serif',
   fontWeight: isSelected ? 700 : 400,
   fontSize: fontSize(14),
-  lineHeight: '19.6px',
+  lineHeight: '2rem',
   color: isSelected ? theme.palette.surface[50] : theme.palette.surface[500],
   flex: 1,
   textAlign: 'left'
@@ -91,7 +92,7 @@ export const SubcategoryLabel = styled(Typography, {
   fontFamily: 'Source Serif Pro, sans-serif',
   fontWeight: isSelected ? 700 : 600,
   fontSize: fontSize(18),
-  lineHeight: '40.5px',
+  lineHeight: '2rem',
   color: isSelected ? theme.palette.surface[50] : theme.palette.surface[500],
   flex: 1,
   textAlign: 'left'

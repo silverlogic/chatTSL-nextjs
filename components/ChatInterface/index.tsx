@@ -3,6 +3,7 @@ import { Box, SvgIconProps, Typography, useTheme } from '@mui/material'
 import { useUser } from '@baseapp-frontend/core'
 import Image from 'next/image'
 import React, { useState, useEffect, useRef, useCallback } from 'react'
+import ReactMarkdown from 'react-markdown'
 import {
   ChatInterfaceContainer,
   ChatInterfaceContentContainer,
@@ -289,10 +290,9 @@ const ChatInterface = ({ chat, onChatUpdated }: IChatInterfaceProps) => {
                                     flexGrow: 1,
                                     '& a': { color: '#14AEEA' },
                                   }}
-                                  dangerouslySetInnerHTML={{
-                                    __html: chatMessage.content,
-                                  }}
-                                ></Box>
+                                >
+                                  <ReactMarkdown>{chatMessage.content}</ReactMarkdown>
+                                </Box>
                               </>
                             )
                           default:

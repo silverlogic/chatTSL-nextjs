@@ -9,14 +9,17 @@ export const Container = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.surface[900],
   minWidth: '337px',
   width: '22%',
-  height: 'calc(100% - 28px)',
+  height: '100%',
   borderWidth: '0px 1px 0px 0px',
-  borderColor: theme.palette.surface[400],
+  borderColor: theme.palette.surface[700],
   borderStyle: 'solid',
   gap: theme.spacing(1),
   overflowY: 'scroll',
   paddingLeft: theme.spacing(0.5),
   paddingRight: theme.spacing(0.5),
+  '&::-webkit-scrollbar': {
+    width: 0
+  },
 }))
 
 export const Separator = styled(Box)(({ theme }) => ({
@@ -28,7 +31,6 @@ export const Separator = styled(Box)(({ theme }) => ({
 }))
 
 export const CategoriesHeaderLabel = styled(Typography)(({ theme }) => ({
-  fontFamily: 'Source Serif Pro, sans-serif',
   fontWeight: 700,
   fontSize: fontSize(11),
   lineHeight: '14.3px',
@@ -39,7 +41,6 @@ export const CategoriesHeaderLabel = styled(Typography)(({ theme }) => ({
 export const CategoriesContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: theme.spacing(0.5),
   marginTop: theme.spacing(1)
 }))
 
@@ -59,9 +60,8 @@ export const CategoryButton = styled(Button)(({ theme }) => ({
 export const CategoryLabel = styled(Typography, {
   shouldForwardProp: (props) => props !== 'isSelected',
 })<ICategoryLabelProps>(({ theme, isSelected }) => ({
-  fontFamily: 'Source Serif Pro, sans-serif',
   fontWeight: isSelected ? 700 : 400,
-  fontSize: fontSize(14),
+  fontSize: fontSize(16),
   lineHeight: '2rem',
   color: isSelected ? theme.palette.surface[50] : theme.palette.surface[500],
   flex: 1,
@@ -83,13 +83,12 @@ export const SubcategoryButton = styled(Button)(({ theme }) => ({
   borderRadius: 0,
   borderColor: 'transparent',
   justifyContent: 'flex-start',
-  textTransform: 'none'
+  textTransform: 'none',
 }))
 
 export const SubcategoryLabel = styled(Typography, {
   shouldForwardProp: (props) => props !== 'isSelected',
 })<ISubcategoryLabelProps>(({ theme, isSelected }) => ({
-  fontFamily: 'Source Serif Pro, sans-serif',
   fontWeight: isSelected ? 700 : 600,
   fontSize: fontSize(18),
   lineHeight: '2rem',
@@ -99,5 +98,5 @@ export const SubcategoryLabel = styled(Typography, {
 }))
 
 export const CloseIcon = styled(FontAwesomeIcon)(({ theme }) => ({
-  color: theme.palette.surface[50],
+  color: theme.palette.surface[600],
 }))

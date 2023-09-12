@@ -248,6 +248,9 @@ const ChatInterface = ({ chat, onChatUpdated }: IChatInterfaceProps) => {
                 flexGrow: 1,
                 overflowX: 'auto',
                 overflowY: 'scroll',
+                '&::-webkit-scrollbar': {
+                  width: 0
+                },
               }}
               ref={boxRef}
               onScroll={(e) => {

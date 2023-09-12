@@ -65,26 +65,29 @@ const Sidebar = ({
         })}
       </CategoriesContainer>
       <Separator component={'div'} />
-      <SubcategoriesContainer>
-        {subcategories.data?.map((subcategory, index: number) => {
-          const isSelected = selectedSubcategory?.id == subcategory.id
-          return (
-            <SubcategoryContainer key={index}>
-              <SubcategoryButton
-                startIcon={<Typography variant="subtitle2">⚪</Typography>}
-                onClick={() => {
-                  onSubcategoryChanged(isSelected ? null : subcategory)
-                }}
-                endIcon={isSelected && <CloseIcon icon={faCircleXmark} />}
-              >
-                <SubcategoryLabel isSelected={isSelected}>
-                  {subcategory.subcategoryName}
-                </SubcategoryLabel>
-              </SubcategoryButton>
-            </SubcategoryContainer>
-          )
-        })}
-      </SubcategoriesContainer>
+
+      {selectedCategory && (
+        <SubcategoriesContainer>
+          {subcategories.data?.slice().sort((a, b) => a.subcategoryName.localeCompare(b.subcategoryName)).map((subcategory, index: number) => {
+            const isSelected = selectedSubcategory?.id == subcategory.id;
+            return (
+              <SubcategoryContainer key={index}>
+                <SubcategoryButton
+                  // startIcon={<Typography variant="subtitle2">⚪</Typography>}
+                  onClick={() => {
+                    onSubcategoryChanged(isSelected ? null : subcategory)
+                  }}
+                  endIcon={isSelected && <CloseIcon icon={faCircleXmark} />}
+                >
+                  <SubcategoryLabel isSelected={isSelected}>
+                    {subcategory.subcategoryName}
+                  </SubcategoryLabel>
+                </SubcategoryButton>
+              </SubcategoryContainer>
+            )
+          })}
+        </SubcategoriesContainer>
+      )}
     </Container>
   )
 }

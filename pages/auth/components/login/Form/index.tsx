@@ -30,9 +30,11 @@ const LoginForm = ({ form }: IFormProps) => {
               form={form}
               fullWidth
               margin="normal"
+              variant="filled"
+              InputLabelProps={{ shrink: true }}
             />
 
-            <PasswordInput label="Password" name="password" form={form} fullWidth margin="normal" />
+            <PasswordInput label="Password" name="password" form={form} fullWidth margin="normal" variant="filled" InputLabelProps={{ shrink: true }} />
 
             <Button loading={false} type="submit" form={form}>
               {form?.formState?.isSubmitting || form?.formState?.isSubmitSuccessful ? (

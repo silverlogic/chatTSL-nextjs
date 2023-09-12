@@ -145,7 +145,7 @@ export const WSConnectionStateContainer = styled(Box)(({ theme }) => ({
   gap: theme.spacing(1),
   justifyContent: 'flex-end',
   position: 'absolute',
-  right: '15px',
+  right: '0',
 }))
 
 export const WSConnectionStateText = styled(Typography)(({ theme }) => ({

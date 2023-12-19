@@ -5,10 +5,10 @@ interface ITettraPageCategory {
 }
 
 interface ITettraPageSubcategory {
-  id: number,
-  subcategoryId: number,
+  id: number
+  subcategoryId: number
   subcategoryName: string
-  subcategoryIconUrl: string | null
+  subcategoryIcon: string | null
 }
 
 interface ITettraPageSubcategoryFilter {

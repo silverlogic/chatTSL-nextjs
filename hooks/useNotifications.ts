@@ -1,5 +1,5 @@
 import { getErrorTextMessage } from '@baseapp-frontend/core'
-import {useSnackbar, VariantType} from 'notistack'
+import { useSnackbar, VariantType } from 'notistack'
 
 export default function useNotifications() {
   const { enqueueSnackbar } = useSnackbar()
@@ -10,7 +10,7 @@ export default function useNotifications() {
   }
 
   const showMessage = (message: string, variant: VariantType = 'info') => {
-    enqueueSnackbar(message, {anchorOrigin: { horizontal: 'right', vertical: 'top' }, variant})
+    enqueueSnackbar(message, { anchorOrigin: { horizontal: 'right', vertical: 'top' }, variant })
   }
 
   const showSuccess = (message: string) => {

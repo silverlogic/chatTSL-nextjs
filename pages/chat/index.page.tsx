@@ -20,7 +20,7 @@ const Chat = () => {
   })
 
   async function createChat() {
-    const chat = await OpenAIChatAPI.create({ model: "gpt-3.5-turbo" })
+    const chat = await OpenAIChatAPI.create({ model: "gpt-4o-mini" })
     mutate(chat)
   }
 

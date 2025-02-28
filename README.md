@@ -1,6 +1,17 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Chat TSL
 
-## NVM
+This is the frontend repo of ChatTSL, an application in which users can chat with their employee handbook (currently, the upload function only supports Tettra)  via a web application (this one, see image below) or via Slack. 
+
+<img width="1151" alt="ChatTSL in action, displaying a question being responded to" src="https://github.com/user-attachments/assets/38a7389a-cb58-4bb9-b038-98b248b4fc2f" />
+
+You can find the related repositories here:
+
+Django: https://github.com/silverlogic/chatTSL-django
+Ansible: https://github.com/silverlogic/chatTSL-ansible
+
+## Setup 
+
+### NVM
 
 This step is optional but it is highly suggested you to use NVM.
 
@@ -12,7 +23,7 @@ Once installed run:
 nvm use
 ```
 
-## Setup
+### Setup
 
 Install node dependencies:
 
@@ -20,7 +31,7 @@ Install node dependencies:
 yarn install
 ```
 
-## Getting Started
+### Getting Started
 
 First, run the development server:
 
@@ -32,17 +43,17 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-## Forking from BaseApp
+### Forking from BaseApp
 
 After forking baseapp:
 
 - Run `bash startup.sh` to copy the templates
 
-## NextJS + MUI v5
+### NextJS + MUI v5
 
 Settings according to [reference repo](https://github.com/leoroese/nextjs-materialui-v5-tutorial)
 
-## Building docker images for K8s
+### Building docker images for K8s
 Our current K8s stack expects 2 images built from the FE Dockerfile. We use a multi-stage Dockerfile, so you need to specify the right **target** for each of them:
 * Webapp image (`webapp_image`)
 ```
@@ -61,7 +72,7 @@ and
 docker build --platform linux/amd64 --tag registry.tsl.io/baseapp/baseapp-webapp-build:BA-123 --target builder .
 ```
 
-## Storybook
+### Storybook
 
 Use this command to run Storybook:
 
